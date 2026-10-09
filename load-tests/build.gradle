@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'io.gatling.gradle' version '3.16.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+
+gatling {
+    includeMainOutput = false
+    includeTestOutput = false
+}
