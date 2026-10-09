@@ -105,6 +105,10 @@ tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 
+tasks.withType(War).configureEach {
+    archiveBaseName = 'chirp-baseline'
+}
+
 assets {
     excludes = [
             'webjars/jquery/**',

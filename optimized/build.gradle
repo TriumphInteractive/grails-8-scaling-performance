@@ -129,6 +129,10 @@ grails {
     }
 }
 
+tasks.withType(War).configureEach {
+    archiveBaseName = 'chirp-optimized'
+}
+
 assets {
     excludes = [
             'webjars/jquery/**',

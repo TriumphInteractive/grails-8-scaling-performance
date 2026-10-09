@@ -22,3 +22,38 @@ gatling {
     includeMainOutput = false
     includeTestOutput = false
 }
+
+def loadTestProperty = { String name, String fallback ->
+    def value = findProperty(name)
+    if (value == null) {
+        value = System.getProperty(name)
+    }
+    (value == null || value.toString().isEmpty()) ? fallback : value.toString()
+}
+
+tasks.named('gatlingRun') {
+    def forwarded = new LinkedHashMap<String, String>()
+    forwarded.baseUrl = loadTestProperty('baseUrl', 'http://localhost:8080')
+    forwarded.users = loadTestProperty('users', '40')
+    forwarded.rampSeconds = loadTestProperty('rampSeconds', '15')
+    forwarded.holdSeconds = loadTestProperty('holdSeconds', '45')
+    systemProperties = forwarded
+}
+
+tasks.register('generateHandles') {
+    group = 'load test'
+    description = 'Rewrite src/gatling/resources/handles.csv. -Paccounts defaults to 2000. user1-user20 weight 100, user21-user200 weight 5, the rest weight 1.'
+    def output = layout.projectDirectory.file('src/gatling/resources/handles.csv')
+    inputs.property('accounts', providers.provider { loadTestProperty('accounts', '2000') })
+    outputs.file(output)
+    doLast {
+        int accounts = Integer.parseInt(inputs.properties['accounts'].toString())
+        List<String> rows = ['handle']
+        (1..accounts).each { int accountNumber ->
+            int weight = accountNumber <= 20 ? 100 : accountNumber <= 200 ? 5 : 1
+            weight.times { rows << "user${accountNumber}" }
+        }
+        output.asFile.setText(rows.join(System.lineSeparator()) + System.lineSeparator(), 'UTF-8')
+        logger.lifecycle("Generated ${rows.size() - 1} weighted handle records")
+    }
+}

@@ -1,0 +1,128 @@
+import org.gradle.process.ExecOperations
+
+import javax.inject.Inject
+
+abstract class ChirpExec {
+    @Inject
+    abstract ExecOperations getExecOperations()
+}
+
+def chirpSeedTargets = [
+        baseline : [url: 'http://localhost:8080', database: 'chirp_baseline'],
+        optimized: [url: 'http://localhost:8081', database: 'chirp_optimized']
+]
+
+def chirpProperty = { String name, String fallback ->
+    def value = findProperty(name)
+    if (value == null) {
+        value = System.getProperty(name)
+    }
+    (value == null || value.toString().isEmpty()) ? fallback : value.toString()
+}
+
+def waitForReady = { String url ->
+    String ready = url.replaceAll(/\/$/, '') + '/api/ready'
+    long deadline = System.currentTimeMillis() + 180_000L
+    while (System.currentTimeMillis() < deadline) {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(ready).openConnection()
+            connection.setConnectTimeout(2_000)
+            connection.setReadTimeout(5_000)
+            connection.setRequestMethod('GET')
+            if (connection.responseCode == 200) {
+                connection.disconnect()
+                return
+            }
+            connection.disconnect()
+        } catch (IOException ignored) {
+            // The app is still starting.
+        }
+        Thread.sleep(2_000)
+    }
+    throw new GradleException("Readiness timed out for ${ready}")
+}
+
+tasks.register('seed') {
+    group = 'load test'
+    description = 'Seed chirp_baseline, chirp_optimized, or both. -PseedTarget or -DseedTarget = baseline|optimized|both. Deletes app data. Does not apply schema DDL.'
+    def execOps = objects.newInstance(ChirpExec).execOperations
+    doLast {
+        String selected = chirpProperty('seedTarget', 'both').toLowerCase()
+        List<String> names = selected == 'both' ? ['baseline', 'optimized'] : [selected]
+        if (!chirpSeedTargets.keySet().containsAll(names)) {
+            throw new GradleException('seedTarget must be baseline, optimized, or both')
+        }
+        List<Map<String, String>> targets = names.collect { chirpSeedTargets[it] }
+        targets.each { waitForReady(it.url) }
+        File seedFile = file('db/seed.sql')
+        targets.each { Map<String, String> target ->
+            execOps.exec {
+                commandLine 'docker', 'cp', seedFile.absolutePath, 'grails8-chirp-postgres:/tmp/seed.sql'
+            }
+            execOps.exec {
+                commandLine 'docker', 'exec', '-e', 'PGPASSWORD=chirp', 'grails8-chirp-postgres',
+                        'psql', '-U', 'chirp', '-d', target.database, '-v', 'ON_ERROR_STOP=1', '-f', '/tmp/seed.sql'
+            }
+            logger.lifecycle("Seeded ${target.database}")
+        }
+    }
+}
+
+tasks.register('warm') {
+    group = 'load test'
+    description = 'GET every timeline and account once. -PbaseUrl or -DbaseUrl. -Paccounts defaults to 2000. -Pconcurrency defaults to 20.'
+    doLast {
+        String base = chirpProperty('baseUrl', 'http://localhost:8080').replaceAll(/\/$/, '')
+        int accounts = Integer.parseInt(chirpProperty('accounts', '2000'))
+        int concurrency = Integer.parseInt(chirpProperty('concurrency', '20'))
+        def pool = java.util.concurrent.Executors.newFixedThreadPool(concurrency)
+        try {
+            List<java.util.concurrent.Future<?>> futures = (1..accounts).collect { int accountNumber ->
+                pool.submit {
+                    ['/api/timelines/user' + accountNumber + '?max=20', '/api/accounts/user' + accountNumber].each { String path ->
+                        HttpURLConnection connection = (HttpURLConnection) new URL(base + path).openConnection()
+                        connection.setConnectTimeout(2_000)
+                        connection.setReadTimeout(30_000)
+                        int status = connection.responseCode
+                        (status >= 400 ? connection.errorStream : connection.inputStream)?.close()
+                        connection.disconnect()
+                        if (status != 200) {
+                            throw new GradleException("Warmup ${base}${path} returned ${status}")
+                        }
+                    }
+                } as java.util.concurrent.Future<?>
+            }
+            try {
+                futures.each { it.get() }
+            } catch (Exception failed) {
+                futures.each { it.cancel(true) }
+                pool.shutdownNow()
+                throw failed
+            }
+        } finally {
+            pool.shutdown()
+        }
+        logger.lifecycle("Warmed ${accounts} handles at ${base}")
+    }
+}
+
+tasks.register('loadTest') {
+    group = 'load test'
+    description = 'Wait for the same baseUrl Gatling will call, then run Gatling. -PbaseUrl or -DbaseUrl. Also users, rampSeconds, holdSeconds.'
+    dependsOn 'waitForApp'
+}
+
+tasks.register('waitForApp') {
+    doLast {
+        waitForReady(chirpProperty('baseUrl', 'http://localhost:8080'))
+    }
+}
+
+gradle.projectsEvaluated {
+    rootProject.tasks.named('loadTest').configure {
+        dependsOn project(':load-tests').tasks.named('gatlingRun')
+    }
+    project(':load-tests').tasks.named('gatlingRun').configure {
+        mustRunAfter rootProject.tasks.named('waitForApp')
+    }
+}

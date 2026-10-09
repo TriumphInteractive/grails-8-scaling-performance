@@ -1,1 +1,3 @@
 description = 'Grails 8 baseline, optimized application, and load-test harness'
+
+apply from: 'gradle/load-test.gradle'

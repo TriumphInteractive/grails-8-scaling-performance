@@ -2,6 +2,7 @@ package demo.chirp
 
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache
 import com.github.benmanes.caffeine.cache.Caffeine
+import org.springframework.beans.factory.DisposableBean
 import org.springframework.beans.factory.annotation.Value
 
 import java.time.Duration
@@ -10,7 +11,7 @@ import java.util.concurrent.CompletionException
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-class ChirpJsonCacheService {
+class ChirpJsonCacheService implements DisposableBean {
     static transactional = false
 
     ChirpReadService chirpReadService
@@ -35,6 +36,13 @@ class ChirpJsonCacheService {
 
     String account(String handle) {
         enabled ? join("account:${handle}".toString()) : chirpReadService.account(handle)
+    }
+
+    @Override
+    void destroy() {
+        if (loadExecutor instanceof java.util.concurrent.ExecutorService) {
+            ((java.util.concurrent.ExecutorService) loadExecutor).shutdown()
+        }
     }
 
     private String join(String key) {
