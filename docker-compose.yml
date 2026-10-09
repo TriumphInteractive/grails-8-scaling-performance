@@ -1,0 +1,23 @@
+name: grails8-chirp
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: grails8-chirp-postgres
+    environment:
+      POSTGRES_USER: chirp
+      POSTGRES_PASSWORD: chirp
+      POSTGRES_DB: postgres
+    ports:
+      - "5438:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chirp -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  postgres-data:

@@ -1,0 +1,5 @@
+-- Schema belongs to each app's Liquibase changelog:
+-- baseline/grails-app/migrations/changelog.groovy
+-- optimized/grails-app/migrations/changelog.groovy
+-- Boot each app with its loadtest profile to migrate before running db/seed.sql.
+-- db/init/01-databases.sql creates databases only, not application tables.
