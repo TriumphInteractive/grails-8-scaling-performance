@@ -1,0 +1,69 @@
+info:
+  app:
+    name: '@info.app.name@'
+    version: '@info.app.version@'
+    grailsVersion: '@info.app.grailsVersion@'
+dataSource:
+  driverClassName: org.postgresql.Driver
+  username: postgres
+  password: ''
+  pooled: true
+  jmxExport: true
+  type: demo.chirp.ChirpHikariDataSource
+environments:
+  development:
+    dataSource:
+      dbCreate: create-drop
+      url: jdbc:postgresql://localhost:5432/devDb?tcpKeepAlive=true
+  test:
+    dataSource:
+      dbCreate: update
+      url: jdbc:postgresql://localhost:5432/testDb?tcpKeepAlive=true
+  production:
+    dataSource:
+      dbCreate: none
+      url: jdbc:postgresql://localhost:5432/postgres?tcpKeepAlive=true
+  loadtest:
+    dataSource:
+      driverClassName: org.postgresql.Driver
+      dbCreate: none
+      url: jdbc:postgresql://localhost:5438/chirp_optimized?tcpKeepAlive=true
+      username: chirp
+      password: chirp
+      pooled: true
+      type: demo.chirp.ChirpHikariDataSource
+    server:
+      port: 8081
+    grails:
+      plugin:
+        databasemigration:
+          changelogFileName: changelog.groovy
+          updateOnStart: true
+          updateOnStartFileName: changelog.groovy
+hibernate:
+  osiv:
+    enabled: false
+  query:
+    in_clause_parameter_padding: true
+  default_batch_fetch_size: 16
+  cache:
+    queries: false
+    use_second_level_cache: false
+    use_query_cache: false
+grails:
+  codegen:
+    defaultPackage: demo.chirp
+  profile: web
+  views:
+    gsp:
+      encoding: UTF-8
+      codecs:
+        scriptlet: html
+  cache:
+    enabled: true
+    cleanAtStartup: false
+    cacheManager: grails.plugin.cache.GrailsConcurrentMapCacheManager
+spring.threads.virtual.enabled: ${CHIRP_VIRTUAL_THREADS:true}
+chirp:
+  cache:
+    enabled: ${CHIRP_CACHE_ENABLED:true}

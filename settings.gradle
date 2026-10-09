@@ -3,4 +3,4 @@ plugins {
 }
 
 rootProject.name = 'grails-8-scaling-performance'
-include 'baseline', 'load-tests'
+include 'baseline', 'optimized', 'load-tests'
