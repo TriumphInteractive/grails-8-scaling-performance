@@ -38,6 +38,14 @@ tasks.named('gatlingRun') {
     forwarded.rampSeconds = loadTestProperty('rampSeconds', '15')
     forwarded.holdSeconds = loadTestProperty('holdSeconds', '45')
     systemProperties = forwarded
+    // 20 logical processors on the measurement laptop. The app is pinned to 12.
+    // Gatling gets 6. The remaining 2 are for the OS and Postgres.
+    // Keep the opens Gatling needs on JDK 21. Replacing jvmArgs drops them.
+    jvmArgs = [
+            '-XX:ActiveProcessorCount=6',
+            '--add-opens=java.base/java.lang=ALL-UNNAMED',
+            '--add-opens=java.base/sun.nio.ch=ALL-UNNAMED'
+    ]
 }
 
 tasks.register('generateHandles') {

@@ -108,7 +108,7 @@ tasks.register('warm') {
 
 tasks.register('loadTest') {
     group = 'load test'
-    description = 'Wait for the same baseUrl Gatling will call, then run Gatling. -PbaseUrl or -DbaseUrl. Also users, rampSeconds, holdSeconds.'
+    description = 'Wait for the same baseUrl Gatling will call, then run Gatling on 6 logical processors. The app must be started with -XX:ActiveProcessorCount=12. -PbaseUrl or -DbaseUrl. Also users, rampSeconds, holdSeconds.'
     dependsOn 'waitForApp'
 }
 
