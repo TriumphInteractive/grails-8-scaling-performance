@@ -2,24 +2,56 @@
 
 Two Grails 8.0.0 apps, one schema, one seed. `baseline` is a deliberately naive read path: dynamic finders, then a query per association per row. `optimized` returns the same fields from a rendered-JSON cache, and a miss is two database statements. This is not a claim that every Grails application is as slow as the baseline.
 
-The table is one run on one laptop, not a capacity rating. Both apps used the same Gatling client: 40 looping users, shared connections, 15 second ramp, 60 second hold, one JVM at a time. The optimized app had every handle warmed immediately before the clock. Its cache expires 20 seconds after write, so that measured minute includes refreshes. Both runs had 0% KO.
+Use the quiet table below in the talk. It is three runs each, Gatling at WARN, on a 12th Gen Intel Core i7-12800H (14 cores, 20 logical processors, 64 GB). The app JVM is started with `-XX:ActiveProcessorCount=12` and Gatling with `-XX:ActiveProcessorCount=6`. That changes how many processors each JVM reports. It does not reserve CPUs. Both processes can still run on any of the 20. Same client: 40 looping users, shared connections, 15 second ramp, 60 second hold, one JVM at a time. Gatling's explicit JVM args replace the plugin defaults, including its 1 GB heap cap. Report OK req/s. The fast path spreads from about 2,600 to 4,600 because cache entries expire after 20 seconds, so quote the mean and the spread, not one minute.
 
-| App | Requests | OK req/s | p50 | p75 | p95 | p99 | Max |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Baseline, JDK 21 | 8,414 | 105.2 | 341 ms | 377 ms | 430 ms | 573 ms | 4.0 s |
-| Optimized, JDK 25, cache warm | 88,799 | 1,110.0 | 19 ms | 32 ms | 46 ms | 82 ms | 7.3 s |
+| Step | Mean OK req/s | Versus baseline |
+|---|---:|---|
+| Baseline, naive reads | 109 |  |
+| Full stack, cache on | 3,449 | 32x |
 
-That is 10.6x on this client. Eighteen optimized requests out of 88,799 were over 1.2 seconds. Report the Gatling "OK req/s" number. KO requests are not throughput.
+An earlier single run, taken while Gatling logged every request at DEBUG and neither JVM set ActiveProcessorCount, was 105.2 versus 1,110 OK req/s (10.6x). That client log cut the fast path roughly in half and did not move the baseline. Do not use 10.6x in the talk.
+
+## Isolated runs
+
+Same client, same 12/6 processor split, three runs each, Gatling logging at WARN. Report OK req/s. An earlier set was taken while Gatling logged every request at DEBUG. That cut the fast path roughly in half and did not move the baseline. Those numbers are retired. Do not use them in the talk.
+
+| Step | Run 1 | Run 2 | Run 3 | Mean | Versus baseline mean 109 |
+|---|---:|---:|---:|---:|---|
+| Baseline, naive reads | 94.1 | 116.8 | 115.7 | 108.9 |  |
+| Full stack, cache on, warmed | 4,560 | 3,220 | 2,567 | 3,449 | 31.7x |
+| Same stack, no warm-up | 4,416 | 3,211 | 2,683 | 3,437 | Inside the full-stack spread |
+| Same stack, HTTP virtual threads off | 4,258 | 2,798 | 4,378 | 3,812 | Inside the spread. Not a loss. |
+| Same stack, pool max 10 instead of 16 | 3,592 | 4,287 | 2,916 | 3,599 | Inside the spread |
+| One SQL query, cache off | collapsed |  |  |  | Not rerun quietly. The logged run was 5.1 OK req/s with 7.7% timeouts. The failure was the server, not the client log. |
+
+The fast path spreads from about 2,600 to 4,600 OK req/s from one minute to the next, because entries expire after 20 seconds. Warm-up, HTTP virtual threads, and pool size 10 versus 16 all land inside that spread. Do not give them their own percents. The HTTP-thread run set `CHIRP_VIRTUAL_THREADS=false`. Cache loads still use a virtual-thread executor.
+
+The change that is not inside the noise is the rendered-JSON cache. Without it, 40 users time out. The one-query miss path is what fills a cache entry. It is not a separate throughput win at this load.
+
+`compileStatic` was not turned off. It stays in the optimized app and is not a line in the talk.
+
+## Machine and processor split
+
+The quiet tables above used these reported processor counts. The retired 10.6x run did not.
+
+| Role | Processors | What that means |
+|---|---:|---|
+| This laptop | 14 cores, 20 logical processors, 64 GB RAM | 12th Gen Intel Core i7-12800H |
+| Application JVM | reports 12 | `-XX:ActiveProcessorCount=12`, heap 1 GB, G1. Not a CPU reservation. |
+| Gatling JVM | reports 6 | `-XX:ActiveProcessorCount=6`, set by `loadTest`. Heap is not capped at 1 GB. |
+| Windows and Postgres | not reserved | Do not start a second app JVM |
+
+Gatling's 40 users are closed-loop virtual users in a JVM that reports 6 processors, not 40 operating-system threads and not a CPU reservation. `warm` uses 20 concurrent HTTP calls and is only the cache fill. It is not the measured client. Use the same reported counts for baseline and optimized. Do not change them between runs.
 
 ## What the optimized app does differently
 
 - A hit returns a rendered JSON string from a Caffeine `AsyncLoadingCache`. It does not touch the database. Entries expire 20 seconds after write and refresh after 10 seconds. Writes do not delete cache entries, so a read can be up to 20 seconds behind a write.
 - A miss looks up the account with a GORM Data Service `@Query`, then runs one Postgres statement for the page: followees, the top 20 chirps per author, cheer count, reply count, tags, mentions, media, and the reply-to handle.
 - The cache load does not hold a map lock across JDBC.
-- The pool size is set in `ChirpHikariDataSource` from `CHIRP_POOL_SIZE` (default 16). `dataSource.properties` in YAML does not reach Hikari on this app.
+- The pool is set in `ChirpHikariDataSource` (max 16, min idle 8). `dataSource.properties` is the documented Grails key and does not reach Hikari on 8.0.0. See https://github.com/apache/grails-core/issues/16567.
 - The baseline list is ordered by `postedAt` only. The optimized page also breaks ties by id, and its child lists are ordered by id. Treat that as a contract difference, not as part of the throughput gap.
 
-The optimized JVM also has Java 25, virtual threads, `compileStatic` on controllers, services, tag libraries, and GSP, Hibernate ORM 7.4.10.Final, and open session in view turned off. Those were on together. This comparison did not turn them off one at a time, so do not cite them as the 10.6x. Compact object headers, JDK 26, JDK 27, and the Grails AOT cache were not part of the measured run. AOT cache training refuses to run on Windows. The second-level cache and the query cache are off.
+The optimized JVM also has Java 25, virtual threads, `compileStatic` on controllers, services, tag libraries, and GSP, Hibernate ORM 7.4.10.Final, and open session in view turned off. The quiet reruns turned HTTP virtual threads off, skipped the warm-up, and cut the pool from 16 to 10. Cache loads still used virtual threads. None of those moved the number outside the run-to-run spread. Do not cite them as part of the 32x. Compact object headers, JDK 26, JDK 27, and the Grails AOT cache were not part of the measured run. AOT cache training refuses to run on Windows. The second-level cache and the query cache are off.
 
 ## How to reproduce the table
 
@@ -38,11 +70,11 @@ Build the war you are measuring:
 .\gradlew.bat :optimized:bootWar
 ```
 
-Start that one war. Use `grails.env=loadtest`. The `production` block keeps the Forge empty password and port 5432. Heap for the table was `-Xms1g -Xmx1g -XX:+UseG1GC`.
+Start that one war. Use `grails.env=loadtest`. The `production` block keeps the Forge empty password and port 5432. Heap is `-Xms1g -Xmx1g -XX:+UseG1GC`. The application JVM reports 12 processors. Gatling, started by `loadTest`, reports 6. Neither setting reserves CPUs. Use the same flags for every comparison run. Do not measure both apps at once.
 
 ```text
-java -Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -jar baseline\build\libs\chirp-baseline-0.1.war --spring.profiles.active=loadtest
-java -Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -jar optimized\build\libs\chirp-optimized-0.1.war --spring.profiles.active=loadtest
+java -Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar baseline\build\libs\chirp-baseline-0.1.war --spring.profiles.active=loadtest
+java -Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar optimized\build\libs\chirp-optimized-0.1.war --spring.profiles.active=loadtest
 ```
 
 Wait until `http://localhost:8080/api/ready` or `http://localhost:8081/api/ready` returns 200. Then seed only the database for the app that is running. This deletes app data. It does not apply schema DDL. It uses `psql` inside the `grails8-chirp-postgres` container.
