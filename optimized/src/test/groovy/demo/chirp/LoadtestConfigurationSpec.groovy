@@ -16,10 +16,13 @@ class LoadtestConfigurationSpec extends Specification {
         config.getProperty('dataSource.type') == 'demo.chirp.ChirpHikariDataSource'
         config.getProperty('dataSource.url') == '${CHIRP_JDBC_URL:jdbc:postgresql://localhost:5438/chirp_optimized?tcpKeepAlive=true}'
         !config.getProperty('dataSource.url').toString().contains('statement_timeout')
-        config.getProperty('dataSource.properties.maximumPoolSize') == null
+        config.getProperty('dataSource.properties.maximumPoolSize') == 16
+        config.getProperty('dataSource.properties.minimumIdle') == 8
+        config.getProperty('dataSource.properties.connectionTimeout') == 2000
         ['development', 'test', 'production', 'loadtest'].every { String environment ->
             config.getProperty("environments.${environment}.dataSource.dbCreate") == 'none' &&
-                    config.getProperty("environments.${environment}.dataSource.type") == 'demo.chirp.ChirpHikariDataSource'
+                    config.getProperty("environments.${environment}.dataSource.type") == 'demo.chirp.ChirpHikariDataSource' &&
+                    config.getProperty("environments.${environment}.dataSource.properties.maximumPoolSize") == 16
         }
         config.getProperty('hibernate.osiv.enabled') == false
         config.getProperty('hibernate.query.in_clause_parameter_padding') == true
@@ -28,7 +31,7 @@ class LoadtestConfigurationSpec extends Specification {
         config.getProperty('hibernate.cache.use_query_cache') == false
     }
 
-    void 'Hikari pool size is the constructor value, including a CHIRP_POOL_SIZE override'() {
+    void 'Hikari pool size is set in the constructor because YAML properties do not bind'() {
         given:
         String previous = System.getProperty('CHIRP_POOL_SIZE')
         System.setProperty('CHIRP_POOL_SIZE', '12')

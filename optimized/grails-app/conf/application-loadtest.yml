@@ -14,6 +14,10 @@ dataSource: &loadtestDataSource
   url: ${CHIRP_JDBC_URL:jdbc:postgresql://localhost:5438/chirp_optimized?tcpKeepAlive=true}
   username: ${CHIRP_JDBC_USER:chirp}
   password: ${CHIRP_JDBC_PASSWORD:chirp}
+  properties:
+    maximumPoolSize: 16
+    minimumIdle: 8
+    connectionTimeout: 2000
 environments:
   development:
     dataSource: *loadtestDataSource

@@ -10,6 +10,10 @@ dataSource:
   pooled: true
   jmxExport: true
   type: demo.chirp.ChirpHikariDataSource
+  properties:
+    maximumPoolSize: 16
+    minimumIdle: 8
+    connectionTimeout: 2000
 environments:
   development:
     dataSource:
@@ -32,6 +36,10 @@ environments:
       password: chirp
       pooled: true
       type: demo.chirp.ChirpHikariDataSource
+      properties:
+        maximumPoolSize: 16
+        minimumIdle: 8
+        connectionTimeout: 2000
     server:
       port: 8081
     grails:
