@@ -1,3 +1,28 @@
+plugins {
+    id 'jvm-toolchains'
+}
+
 description = 'Grails 8 baseline, optimized application, and load-test harness'
 
 apply from: 'gradle/load-test.gradle'
+
+def toolchainService = extensions.getByType(org.gradle.jvm.toolchain.JavaToolchainService)
+
+tasks.register('correttoHomes') {
+    group = 'load test'
+    description = 'Print the Amazon Corretto 21 and 25 homes the toolchain resolver selected.'
+    def corretto21 = toolchainService.launcherFor {
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.AMAZON
+    }
+    def corretto25 = toolchainService.launcherFor {
+        languageVersion = JavaLanguageVersion.of(25)
+        vendor = JvmVendorSpec.AMAZON
+    }
+    doLast {
+        [corretto21, corretto25].each { launcher ->
+            def metadata = launcher.get().metadata
+            println "${metadata.languageVersion} ${metadata.vendor} ${metadata.installationPath}"
+        }
+    }
+}

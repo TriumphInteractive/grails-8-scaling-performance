@@ -83,6 +83,7 @@ dependencies {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
+        vendor = JvmVendorSpec.AMAZON
     }
 }
 
@@ -90,11 +91,15 @@ compileJava.options.release = 25
 
 def compileJavaLauncher = javaToolchains.launcherFor {
     languageVersion = JavaLanguageVersion.of(25)
+    vendor = JvmVendorSpec.AMAZON
 }
 
 def runtimeJavaVersion = (findProperty('runtimeJava') ?: '25') as Integer
 def runtimeJava = javaToolchains.launcherFor {
     languageVersion = JavaLanguageVersion.of(runtimeJavaVersion)
+    if (runtimeJavaVersion == 21 || runtimeJavaVersion == 25) {
+        vendor = JvmVendorSpec.AMAZON
+    }
 }
 
 tasks.named('bootRun') {
