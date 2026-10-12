@@ -287,3 +287,7 @@ docker compose -p grails8-chirp down
 Add `-v` only when you mean to drop the database volume.
 
 `:load-tests:generateHandles -Paccounts=2000` rewrites the weighted feeder. The seed still creates 2000 accounts. Change both together if you change the account count.
+
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE).

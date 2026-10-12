@@ -2,5 +2,14 @@
 **/build/
 out/
 *.log
+logs/
 .omo/
 load-tests/results/
+.idea/
+*.iml
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.hprof
