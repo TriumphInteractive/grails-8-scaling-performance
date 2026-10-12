@@ -218,7 +218,7 @@ At step 6 the mixed workload averages about 40 / 2661 = 15 ms per request end to
 
 ## Switches
 
-Build switches. `-PchirpCompileStatic` and `-PchirpJava` default to `true` and `25`.
+Build switches. `-PchirpCompileStatic` applies to both apps and defaults to `true`. `-PgroovyIndy` applies to the baseline only and defaults to `false`; the optimized app keeps invokedynamic off. `-PchirpJava` applies to the optimized app only and defaults to `25`; the baseline always builds Java 21 bytecode.
 
 | Switch | Effect |
 |---|---|
@@ -261,6 +261,8 @@ $env:CHIRP_MIN_IDLE = '48'
 ```
 
 System properties such as `-Dchirp.gorm.entityBatchSize=50` go before `-jar`; `--` arguments go after the war.
+
+The pool defaults in this checkout are 16 connections, 8 minimum idle, and a 2000 ms timeout, which is neither step 1 nor the rest. For step 1, set `CHIRP_POOL_SIZE=10`, `CHIRP_MIN_IDLE=10`, and `CHIRP_CONNECTION_TIMEOUT=30000` to match Hikari's own defaults. Steps 2 to 7 use 48, 48, and 2000.
 
 Wait until `http://localhost:8080/api/ready` returns 200. Before each run, reseed the app's database and refresh planner statistics. This deletes app data.
 

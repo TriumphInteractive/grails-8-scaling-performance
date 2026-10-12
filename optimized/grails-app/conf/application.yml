@@ -10,6 +10,8 @@ dataSource:
   pooled: true
   jmxExport: true
   type: demo.chirp.ChirpHikariDataSource
+  # Ignored on Grails 8.0.0 (apache/grails-core#16567). ChirpHikariDataSource sizes the pool;
+  # override it with CHIRP_POOL_SIZE, CHIRP_MIN_IDLE, and CHIRP_CONNECTION_TIMEOUT.
   properties:
     maximumPoolSize: 16
     minimumIdle: 8
@@ -36,6 +38,7 @@ environments:
       password: chirp
       pooled: true
       type: demo.chirp.ChirpHikariDataSource
+      # Ignored on Grails 8.0.0 (apache/grails-core#16567); see ChirpHikariDataSource.
       properties:
         maximumPoolSize: 16
         minimumIdle: 8
