@@ -4,7 +4,7 @@ Two Grails 8.0.0 apps, one schema, one seed, one load test. `baseline` is a deli
 
 ## The ladder
 
-Each step keeps everything above it. Three runs per step unless noted, OK requests per second, zero failed requests in every run. Gatling at WARN, 40 looping users, 15 second ramp, 60 second hold. Every run reseeded the database, ran `ANALYZE`, and warmed every handle first.
+Each step keeps everything above it. Three runs per step unless noted, OK requests per second, zero failed requests in every run. Gatling at WARN, 40 looping users, 15 second ramp, 60 second hold (3 minutes for step 7). Every run reseeded the database, ran `ANALYZE`, and warmed every handle first.
 
 | # | Step | Runs | Mean req/s | Step lift | Total |
 |---|---|---|---:|---:|---:|
@@ -14,9 +14,9 @@ Each step keeps everything above it. Three runs per step unless noted, OK reques
 | 4 | GORM: `batchSize 50` on the `Account` and `Chirp` mappings | 456, 467 | 462 | 1.2x | 3.5x |
 | 5 | GORM: two grouped count projections instead of 40 `countBy` calls | 1273, 1311, 1360 | 1315 | 2.85x | 10x |
 | 6 | One hand-written SQL statement per timeline page | 2458, 2865 | 2661 | 2.0x | 20x |
-| 7 | Rendered-JSON cache in front of that query | 6404, 3774, 3594 | 4591 | 1.7x | 35x |
+| 7 | Rendered-JSON cache in front of that query | 4277, 4141, 4179 | 4199 | 1.6x | 32x |
 
-Steps 3 to 7 run on Corretto 25 with `compileStatic`, held constant, because those two do not move this workload (see [What did not help](#what-did-not-help-on-this-workload)). The same war as steps 3 to 5 with every GORM switch off measured 192, 220, and 211 (mean 208), and step 3's lift is against that control. Step 4 shows two runs because another job on the machine overlapped the third, which is excluded. Step 6 likewise excludes one overlapped run. Step 7 swings widely between runs (see step 7), so quote the mean and the range.
+Steps 3 to 7 run on Corretto 25 with `compileStatic`, held constant, because those two do not move this workload (see [What did not help](#what-did-not-help-on-this-workload)). The same war as steps 3 to 5 with every GORM switch off measured 192, 220, and 211 (mean 208), and step 3's lift is against that control. Step 4 shows two runs because another job on the machine overlapped the third, which is excluded. Step 6 likewise excludes one overlapped run. Step 7 uses 3 minute holds because 60 second runs of the cache swing widely (see step 7).
 
 SQL statements per 20-chirp timeline page, counted from the Hibernate SQL log:
 
@@ -169,19 +169,26 @@ Caffeine.newBuilder()
 
 A hit returns the string without touching the database or rendering JSON. After 10 seconds an entry is refreshed in the background while readers keep getting the old value; after 20 seconds it expires and the next reader loads it. Loads run on a virtual-thread executor and do not hold a map lock across JDBC. Writes do not invalidate entries, so a read can be up to 20 seconds behind a write. That is the trade for this step.
 
-The runs swing from 3594 to 6404 req/s. A likely contributor is the 20 second expiry: a 60 second window catches a different mix of expiries and reloads each time, though cache hit rates were not recorded to prove it.
+With 60 second holds this configuration swung from 3594 to 6404 req/s (mean 4591). With 3 minute holds it stayed between 4141 and 4277, so the ladder uses those. A likely contributor to the swing is the 20 second expiry: a short window catches a different mix of expiries and reloads each time, though cache hit rates were not recorded to prove it.
 
-Result: 4591 req/s, 1.7x, 35x over the stock app.
+Result: 4199 req/s, 1.6x, 32x over the stock app.
 
 ## What did not help on this workload
 
-| Change | Where measured | Result |
-|---|---|---|
-| Corretto 25 instead of 21, same war | naive app: 228 vs 224. Optimized, cache off: 2485 vs 2360 | Flat |
-| `compileStatic` | naive app: 224 vs 221. Optimized, cache off, six runs per mode in alternating three-run blocks: 2587 dynamic vs 2509 static | Flat |
-| Groovy invokedynamic on | naive app: 224 vs 221 | Flat. Grails 8 turns it off by default (`grails { indy = false }`) |
-| Virtual threads | naive app: 221 vs 146. Optimized, cache off: 2661 vs 2403. Cached: within the spread | Slower or flat |
-| `-XX:+UseCompactObjectHeaders` | optimized, cache off: 2661 vs 2593 (one overlapped run excluded). Cached: within the spread | Flat |
+The platform switches were compared at four points on the ladder, one switch at a time on top of the same configuration. Blank cells were not measured. Mean req/s, without → with:
+
+| Change | Naive, step 2 | GORM tuned, step 5 | One query, step 6 | Cached, step 7 |
+|---|---|---|---|---|
+| Corretto 21 → 25, same war | 228 → 224 | 1323 → 1301 | 2485 → 2360 | 4017 → 4090 |
+| Dynamic Groovy → `compileStatic` | 224 → 221 | 1301 → 1337 | 2587 → 2509 | 4090 → 4199 |
+| invokedynamic off → on | 224 → 221 | | | |
+| Platform → virtual threads | 221 → 146 | 1337 → 1123 | 2661 → 2403 | 4199 → 3992 |
+| Compact object headers off → on | | 1337 → 1332 | 2661 → 2593 | 4199 → 4011 |
+
+- **Java 25, `compileStatic`, invokedynamic, and compact headers are flat at every point.** Every one of those differences is about 5 percent or less, which is inside the run-to-run variation at each point.
+- **Virtual threads are slower at every point**, from 34 percent on the naive app to 16 percent at step 5, 10 percent at step 6, and 5 percent on the cached app.
+
+Notes on the table. The naive, step 5, and step 6 columns are 60 second holds; the cached column is 3 minute holds. Step 6's `compileStatic` row is six runs per mode in alternating three-run blocks. Step 6's compact-header row excludes one overlapped run. The cached app on Corretto 21 was measured again at the end of that series and read 4127, so the 21 → 25 difference there is inside drift. The cached compact-header row is two sets of three runs (3917, then 4106). Grails 8 turns invokedynamic off by default (`grails { indy = false }`).
 
 ### Why the database set the pace
 
@@ -199,9 +206,18 @@ That is an inference from these comparisons, not a measured breakdown of where e
 
 On this workload those savings stay inside the run-to-run variation. A repeat of the same naive configuration varied by up to 7 percent, and one optimized cache-off configuration moved 15 percent between consecutive runs (2483 to 2860 req/s). The Java version, `compileStatic`, invokedynamic, and compact-header differences in the table above are all smaller than that.
 
-Virtual threads solve a different shortage: running out of threads. Tomcat has 200 platform threads and there are only 40 requests in flight, so no request ever waits for a thread. The queue is for database connections and database time, and virtual threads do not add either. Here they only added per-request cost, which shows on the naive app (221 down to 146 req/s).
+Virtual threads solve a different shortage: running out of threads. Tomcat has 200 platform threads and there are only 40 requests in flight, so no request ever waits for a thread. The queue is for database connections and database time, and virtual threads do not add either. Here they only added per-request cost. That cost is largest where requests make the most blocking calls, 34 percent on the naive app, and shrinks to 5 percent on the cached app.
 
 At step 6 the mixed workload averages about 40 / 2661 = 15 ms per request end to end. A timeline read there is two statements, one of them a heavier query with `LATERAL`, correlated counts, and `json_agg`; an account read is a handful of grouped queries. Only the cache in step 7 takes the database off the hot path for most requests.
+
+CPU use was sampled every 5 seconds during the step 5 and step 7 configurations (Corretto 25, `compileStatic`, platform threads). Cores busy, median of the three per-run medians:
+
+| Point | Application JVM | Postgres |
+|---|---:|---:|
+| Step 5, GORM tuned | 6.3 | 5.9 |
+| Step 7, cached | 5.5 | 0.4 |
+
+The cache cuts Postgres CPU from about 6 cores to under half a core. At step 7 neither the application JVM nor Postgres is near the machine's capacity on these aggregate numbers, but aggregate CPU can hide a saturated thread, lock contention, or short stalls, so this does not show what the limit is there. The HTTP stack, the loopback network, and the load generator running on the same machine are candidates that were not measured.
 
 ## How it was measured
 
@@ -278,7 +294,7 @@ For the optimized app (steps 6 and 7) use `-PseedTarget=optimized`, `chirp_optim
 .\gradlew.bat loadTest -PbaseUrl=http://localhost:8080 -Pusers=40 -PrampSeconds=15 -PholdSeconds=60
 ```
 
-Report Gatling's mean throughput for OK requests. Stop the war before starting the next one. When you are finished:
+For step 7 use `-PholdSeconds=180`. Report Gatling's mean throughput for OK requests. Stop the war before starting the next one. When you are finished:
 
 ```text
 docker compose -p grails8-chirp down
