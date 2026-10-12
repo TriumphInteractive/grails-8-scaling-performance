@@ -5,6 +5,7 @@ plugins {
 description = 'Grails 8 baseline, optimized application, and load-test harness'
 
 apply from: 'gradle/load-test.gradle'
+apply from: 'gradle/ladder.gradle'
 
 def toolchainService = extensions.getByType(org.gradle.jvm.toolchain.JavaToolchainService)
 

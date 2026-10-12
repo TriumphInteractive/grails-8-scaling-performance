@@ -11,7 +11,7 @@
 
 Acceptance passed: both endpoint response bodies have identical SHA256 hashes in G0-G3. Timeline SQL statements fall at every step: 116 > 59 > 47 > 9. Account statements are unchanged between G1 and G2, then fall with grouped counts.
 
-An additional off-switch regression check used the existing `ladder2\static.war` with the same JVM and pool settings. Its responses match G0 byte-for-byte by SHA256. All 116 timeline statements and all 55 account statements also match G0 in exact SQL text and order, excluding logger timestamps, PIDs, and thread names. Evidence: `GBefore-results.json`, `GBefore-sql.txt`, and `compare-off-sql.ps1`.
+An additional off-switch regression check used the existing `ladder2\static.war` with the same JVM and pool settings. Its responses match G0 byte-for-byte by SHA256. All 116 timeline statements and all 55 account statements also match G0 in exact SQL text and order, excluding logger timestamps, PIDs, and thread names. Evidence: `GBefore-results.json`, `GBefore-sql.txt`, and an unpublished SQL comparison. After establishing a G0 reference with `.\gradlew.bat verifyGorm`, reproduce the response-hash and statement-count check with `.\gradlew.bat verifyGorm '-PverifyWar=path/to/earlier-static.war'` (the GBefore configuration).
 
 ## Diff summary
 
@@ -44,13 +44,13 @@ Explicit `List` casts on the criteria results resolved the error. No `@CompileDy
 
 ## Verification method and artifacts
 
-- Corretto 25: `<home>\.gradle\jdks\amazon_com_inc_-25-amd64-windows.2\bin\java.exe`.
+- Corretto 25, now resolved by the Gradle Amazon toolchain launcher rather than a local JDK path.
 - Common environment: `CHIRP_POOL_SIZE=48`, `CHIRP_MIN_IDLE=48`, `CHIRP_CONNECTION_TIMEOUT=2000`.
 - Common JVM flags: `-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12`.
 - Common application arguments: `--spring.profiles.active=loadtest --logging.level.org.hibernate.SQL=DEBUG`.
 - G1 adds `--hibernate.default_batch_fetch_size=50`. G2 additionally adds JVM property `-Dchirp.gorm.entityBatchSize=50`. G3 additionally adds JVM property `-Dchirp.gorm.groupedCounts=true`. All system properties precede `-jar`.
-- Each launch used its `.cmd` file and hidden WMI startup, one server at a time on port 8080. Polled `/api/ready` until HTTP 200. Warmed each endpoint once, waited two seconds, captured the log line count, requested the endpoint into its JSON file, then waited two seconds and counted new `org.hibernate.SQL` lines.
+- The Gradle `verifyGorm` task launches an owned child JVM for each configuration, one server at a time on port 8080, and always stops it in a `finally` block. It polls `/api/ready` until HTTP 200, warms each endpoint once, waits two seconds, captures the log line count, requests the endpoint into its JSON file, then waits two seconds and counts new `org.hibernate.SQL` lines. Like the earlier runner, it checks the existing database without reseeding or load. Counts and hashes depend on that snapshot: the published bodies include load-test writes, not only the seed, so a freshly seeded database need not reproduce the historical counts or hashes.
 - Timeline URL: `/api/timelines/user1?max=20`. Account URL: `/api/accounts/user1`.
-- `G0-results.json` through `G3-results.json` record statement counts, measurement line boundaries, hashes, and owned Java PIDs. `G<n>-sql.txt`, `G<n>-user1.json`, and `G<n>-account-user1.json` contain the raw evidence. `verify-gorm.ps1` reproduces these single-request checks; it is not a load test.
-- The first measurement attempt encountered a Windows log-sharing error. The helper now opens active logs with `FileShare.ReadWrite`; the failed attempt's owned server was stopped before retrying.
+- `G0-results.json` through `G3-results.json` record statement counts, measurement line boundaries, hashes, and owned Java PIDs. `G<n>-sql.txt`, `G<n>-user1.json`, and `G<n>-account-user1.json` contain the raw evidence. Run `.\gradlew.bat ladderWars` once, then `.\gradlew.bat verifyGorm` to reproduce these single-request checks; it is not a load test. New artifacts and `summary.txt` are written to `build/ladder/gorm/`.
+- The first historical measurement attempt encountered a Windows log-sharing error; its owned server was stopped before retrying. The Gradle runner reads the redirected live log directly.
 - All launched Java processes were stopped by owned PID after verification. Port 8080 is no longer listening. The pre-existing `grails8-chirp-postgres` container remains running and healthy on port 5438. No reseeding, load tests, container shutdown, or unrelated process termination occurred.

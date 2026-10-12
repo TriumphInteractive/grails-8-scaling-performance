@@ -1,0 +1,574 @@
+import com.sun.jna.platform.win32.Ole32
+import com.sun.jna.platform.win32.WinError
+import com.sun.jna.platform.win32.COM.COMUtils
+import com.sun.jna.platform.win32.COM.WbemcliUtil.WmiQuery
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+import org.gradle.jvm.toolchain.JavaToolchainService
+import org.gradle.jvm.toolchain.JvmVendorSpec
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+import java.security.MessageDigest
+import java.time.Instant
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicReference
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        // ProcessHandle exposes CPU time, but not command lines on Windows.
+        classpath 'net.java.dev.jna:jna-platform:5.17.0'
+    }
+}
+
+// ProcessBuilder keeps the app PID owned by this runner and redirects live logs
+// without a shell or a pipe that could outlive the Gradle invocation.
+class ChirpLadder {
+    enum ProcessProperty { PROCESSID, COMMANDLINE }
+
+    static Process start(List command, File directory, Map environment, File out, File err = out) {
+        out.parentFile.mkdirs()
+        def builder = new ProcessBuilder(command.collect { it.toString() }).directory(directory)
+        environment.each { key, value -> builder.environment().put(key.toString(), value.toString()) }
+        builder.redirectOutput(out)
+        if (err == out) {
+            builder.redirectErrorStream(true)
+        } else {
+            builder.redirectError(err)
+        }
+        builder.start()
+    }
+
+    static void stop(Process process) {
+        // Snapshot descendants before destroying the parent, so they cannot be orphaned.
+        List<ProcessHandle> children
+        try (def descendants = process.descendants()) {
+            children = descendants.toList()
+        }
+        children.reverseEach { it.destroyForcibly() }
+        process.destroyForcibly()
+        process.waitFor(20, TimeUnit.SECONDS)
+        children.each { child ->
+            if (child.isAlive()) {
+                child.onExit().get(20, TimeUnit.SECONDS)
+            }
+        }
+        if (process.isAlive()) {
+            throw new GradleException("Owned process ${process.pid()} did not stop")
+        }
+    }
+
+    static int run(List command, File directory, Map environment, File log, long seconds = 1800) {
+        Process process = start(command, directory, environment, log)
+        try {
+            if (!process.waitFor(seconds, TimeUnit.SECONDS)) {
+                throw new GradleException("Command timed out: ${command.join(' ')}; see ${log}")
+            }
+            process.exitValue()
+        } finally {
+            if (process.isAlive()) {
+                stop(process)
+            }
+        }
+    }
+
+    static String capture(List command, File directory, File log) {
+        int exit = run(command, directory, [:], log, 60)
+        String text = log.getText('UTF-8').trim()
+        if (exit != 0) {
+            throw new GradleException("Command failed (${exit}): ${command.join(' ')}\n${text}")
+        }
+        text
+    }
+
+    static Map<Long, String> windowsCommands() {
+        def initialized = Ole32.INSTANCE.CoInitializeEx(null, Ole32.COINIT_MULTITHREADED)
+        if (initialized.intValue() != WinError.RPC_E_CHANGED_MODE) {
+            COMUtils.checkRC(initialized)
+        }
+        try {
+            def security = Ole32.INSTANCE.CoInitializeSecurity(null, -1, null, null,
+                    Ole32.RPC_C_AUTHN_LEVEL_DEFAULT, Ole32.RPC_C_IMP_LEVEL_IMPERSONATE, null, Ole32.EOAC_NONE, null)
+            if (security.intValue() != WinError.RPC_E_TOO_LATE) {
+                COMUtils.checkRC(security)
+            }
+            def query = new WmiQuery<ProcessProperty>("Win32_Process WHERE Name='java.exe'", ProcessProperty)
+            def result = query.execute(10_000)
+            Map<Long, String> commands = [:]
+            for (int row = 0; row < result.resultCount; row++) {
+                long pid = Integer.toUnsignedLong((Integer) result.getValue(ProcessProperty.PROCESSID, row))
+                commands[pid] = (String) result.getValue(ProcessProperty.COMMANDLINE, row)
+            }
+            commands
+        } finally {
+            if (COMUtils.SUCCEEDED(initialized)) {
+                Ole32.INSTANCE.CoUninitialize()
+            }
+        }
+    }
+
+    static List<Map> javaProcesses() {
+        List<Map> javaProcesses
+        try (def processes = ProcessHandle.allProcesses()) {
+            javaProcesses = processes.filter { handle ->
+                String command = handle.info().command().orElse('').replace('\\', '/').toLowerCase(Locale.ROOT)
+                command.endsWith('/java.exe') || command.endsWith('/java')
+            }.map { [process: it, commandLine: it.info().commandLine().orElse('')] }.toList()
+        }
+        // Corretto/OpenJDK on Windows returns Optional.empty for commandLine.
+        // Read that missing metadata through native WMI, never a shell script.
+        Map<Long, String> fallback = System.getProperty('os.name').startsWith('Windows') &&
+                javaProcesses.any { !it.commandLine } ? windowsCommands() : [:]
+        javaProcesses.collect { entry ->
+            String command = entry.commandLine ?: fallback[entry.process.pid()] ?: ''
+            [process: entry.process, commandLine: command.replace('\\', '/')]
+        }
+    }
+
+    static List<String> javaCommands() {
+        javaProcesses().collect { it.commandLine }
+    }
+
+    static boolean flaky() {
+        javaCommands().any { it.toLowerCase(Locale.ROOT).contains('/appdata/local/temp/wt/') }
+    }
+
+    static boolean otherApp() {
+        javaCommands().any { command ->
+            (command =~ /(?i)-jar\s+(?:"[^"]*\.war"|\S+\.war)(?:\s|$)/).find() &&
+                    (command.contains('chirp-') || command.contains('/ladder/'))
+        }
+    }
+
+    static void requireFreePort(int port) {
+        try (def socket = new ServerSocket()) {
+            socket.reuseAddress = false
+            socket.bind(new InetSocketAddress(port))
+        } catch (IOException busy) {
+            throw new GradleException("Port ${port} already occupied; refusing to start another server", busy)
+        }
+    }
+
+    static byte[] get(String url, int timeout = 30_000) {
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection()
+        try {
+            connection.connectTimeout = 2_000
+            connection.readTimeout = timeout
+            int status = connection.responseCode
+            if (status != 200) {
+                throw new IOException("GET ${url} returned ${status}")
+            }
+            connection.inputStream.withCloseable { it.bytes }
+        } finally {
+            connection.disconnect()
+        }
+    }
+
+    static void ready(Process app, String baseUrl) {
+        long deadline = System.nanoTime() + TimeUnit.MINUTES.toNanos(4)
+        while (System.nanoTime() < deadline && app.isAlive()) {
+            try {
+                get(baseUrl + '/api/ready', 5_000)
+                if (app.isAlive()) {
+                    return
+                }
+            } catch (IOException ignored) {
+                // The owned app is still starting.
+            }
+            Thread.sleep(2_000)
+        }
+        throw new GradleException("Readiness failed for ${baseUrl}, app PID ${app.pid()}; see app logs")
+    }
+
+    static Map gatling(File log) {
+        List<String> lines = log.readLines('UTF-8')
+        int global = lines.findLastIndexOf { it.contains('Global Information') }
+        def result = [rps: '', ok: '', ko: '']
+        def number = { String value ->
+            String text = value.trim().replace(',', '')
+            text in ['', '-'] ? '0' : text
+        }
+        if (global >= 0) {
+            lines.drop(global).each { String line ->
+                if (!result.ok && line.startsWith('> request count')) {
+                    String[] parts = line.split('\\|')
+                    result.ok = number(parts[2])
+                    result.ko = number(parts[3])
+                }
+                if (!result.rps && line.startsWith('> mean throughput (rps)')) {
+                    result.rps = number(line.split('\\|')[1])
+                }
+            }
+        }
+        if (!result.rps || !result.ok || !result.ko) {
+            throw new GradleException("No complete Gatling Global Information block in ${log}")
+        }
+        result
+    }
+
+    static double cpuSeconds(ProcessHandle process) {
+        process.info().totalCpuDuration().orElseThrow {
+            new GradleException("CPU duration unavailable for PID ${process.pid()}")
+        }.toNanos() / 1_000_000_000d
+    }
+
+    static double gatlingCpuSeconds() {
+        javaProcesses().findAll {
+            it.commandLine.contains('io.gatling.app') || it.commandLine.contains('io.gatling.plugin')
+        }.sum(0d) {
+            // Gatling may exit between the process snapshot and this CPU read.
+            it.process.info().totalCpuDuration().orElse(java.time.Duration.ZERO).toNanos() / 1_000_000_000d
+        }
+    }
+
+    static String cpuSummary(File file) {
+        def rows = file.readLines('UTF-8').collect { line ->
+            def parts = line.split(',')
+            [time: Instant.parse(parts[0]), app: parts[1] as double,
+             gatling: parts[2] as double, pg: parts[3] as double]
+        }
+        def app = [], gatling = [], pg = []
+        for (int i = 1; i < rows.size(); i++) {
+            double seconds = java.time.Duration.between(rows[i - 1].time, rows[i].time).toNanos() / 1_000_000_000d
+            if (seconds > 0) {
+                double cores = (rows[i].app - rows[i - 1].app) / seconds
+                if (cores > 0.05d) {
+                    app << cores
+                    gatling << Math.max(0d, (rows[i].gatling - rows[i - 1].gatling) / seconds)
+                    pg << rows[i].pg / 100d
+                }
+            }
+        }
+        def median = { values -> values ? Math.round(values.sort()[values.size().intdiv(2)] * 100d) / 100d : 0d }
+        "appCores=${median(app)} gatlingCores=${median(gatling)} postgresCores=${median(pg)} samples=${app.size()}"
+    }
+
+    static String sha256(File file) {
+        MessageDigest.getInstance('SHA-256').digest(file.bytes).encodeHex().toString().toUpperCase(Locale.ROOT)
+    }
+}
+
+def ladderDirectory = layout.buildDirectory.dir('ladder').get().asFile
+def ladderRoot = rootDir
+def windows = System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')
+def toolchains = extensions.getByType(JavaToolchainService)
+def launchers = [21, 25].collectEntries { version ->
+    [(version): toolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(version)
+        vendor = JvmVendorSpec.AMAZON
+    }]
+}
+def propertyValue = { String name, String fallback -> (findProperty(name) ?: fallback).toString() }
+def wrapper = { List arguments ->
+    (windows ? ['cmd.exe', '/d', '/c', 'gradlew.bat'] : [new File(ladderRoot, 'gradlew').absolutePath]) +
+            arguments + ['--console=plain', '--project-cache-dir', new File(ladderDirectory, 'gradle-cache').absolutePath]
+}
+def gradleEnvironment = {
+    File home = launchers[21].get().metadata.installationPath.asFile
+    [(windows ? 'Path' : 'PATH'): new File(home, 'bin').absolutePath + File.pathSeparator + System.getenv('PATH'),
+     JAVA_HOME: home.absolutePath]
+}
+def pool = [CHIRP_POOL_SIZE: '48', CHIRP_MIN_IDLE: '48', CHIRP_CONNECTION_TIMEOUT: '2000']
+def batch = '--hibernate.default_batch_fetch_size=50'
+def entityBatch = '-Dchirp.gorm.entityBatchSize=50'
+def groupedCounts = '-Dchirp.gorm.groupedCounts=true'
+def compact = '-XX:+UseCompactObjectHeaders'
+def virtual = '--spring.threads.virtual.enabled=true'
+def layer = { int jdk, String war, String app = 'baseline', Map vars = [:], List jvm = [], List extra = [] ->
+    [jdk: jdk, war: war, app: app, port: app == 'baseline' ? 8080 : 8081,
+     db: "chirp_${app}".toString(), vars: pool + vars, jvm: jvm, extra: extra]
+}
+def layers = [
+        S0: layer(21, 'naive', 'baseline', [CHIRP_POOL_SIZE: '10', CHIRP_MIN_IDLE: '10', CHIRP_CONNECTION_TIMEOUT: '30000']),
+        S1: layer(21, 'naive'),
+        G0: layer(25, 'static'),
+        G1: layer(25, 'static', 'baseline', [:], [], [batch]),
+        G2: layer(25, 'static', 'baseline', [:], [entityBatch], [batch]),
+        G3: layer(25, 'static', 'baseline', [:], [entityBatch, groupedCounts], [batch]),
+        H0: layer(21, 'naive', 'baseline', [:], [entityBatch, groupedCounts], [batch]),
+        H1: layer(25, 'naive', 'baseline', [:], [entityBatch, groupedCounts], [batch]),
+        H2: layer(25, 'static', 'baseline', [:], [entityBatch, groupedCounts], [batch]),
+        H3: layer(25, 'static', 'baseline', [:], [entityBatch, groupedCounts], [batch, virtual]),
+        H4: layer(25, 'static', 'baseline', [:], [compact, entityBatch, groupedCounts], [batch]),
+        L0: layer(21, 'naive'),
+        L1: layer(25, 'naive'),
+        L1i: layer(25, 'naive-indy'),
+        L2: layer(25, 'static'),
+        L3: layer(25, 'static', 'baseline', [:], [], [virtual]),
+        L4: layer(25, 'optimized', 'optimized', [CHIRP_CACHE_ENABLED: 'false', CHIRP_VIRTUAL_THREADS: 'true']),
+        L5: layer(25, 'optimized', 'optimized', [CHIRP_CACHE_ENABLED: 'true', CHIRP_VIRTUAL_THREADS: 'true'])
+]
+// P and F isolate the same platform switches, with the cache off and on respectively.
+['P': 'false', 'F': 'true'].each { prefix, cache ->
+    def vars = [CHIRP_CACHE_ENABLED: cache, CHIRP_VIRTUAL_THREADS: 'false']
+    layers["${prefix}0".toString()] = layer(21, 'optimized-j21-dyn', 'optimized', vars)
+    layers["${prefix}1".toString()] = layer(25, 'optimized-j21-dyn', 'optimized', vars)
+    layers["${prefix}2".toString()] = layer(25, 'optimized-j21-static', 'optimized', vars)
+    layers["${prefix}3".toString()] = layer(25, 'optimized-j21-static', 'optimized', vars + [CHIRP_VIRTUAL_THREADS: 'true'])
+    layers["${prefix}4".toString()] = layer(25, 'optimized-j21-static', 'optimized', vars, [compact])
+}
+layers.C0 = layers.F2
+layers.C1 = layers.F4
+layers.C2 = layers.F3
+
+def logProgress = { String message ->
+    new File(ladderDirectory, 'progress.txt').append("${Instant.now()} ${message}\n", 'UTF-8')
+    logger.lifecycle(message)
+}
+def quiet = { String label, boolean noApps = false ->
+    boolean waited = false
+    while (ChirpLadder.flaky() || (noApps && ChirpLadder.otherApp())) {
+        if (!waited) {
+            logger.lifecycle("${label}: waiting for other project JVMs to exit")
+        }
+        waited = true
+        Thread.sleep(15_000)
+    }
+    logProgress("${label} quiet (waited=${waited})")
+}
+def dockerPsql = { String db, List arguments ->
+    ['docker', 'exec', '-e', 'PGPASSWORD=chirp', 'grails8-chirp-postgres', 'psql', '-U', 'chirp', '-d', db] + arguments
+}
+def copySeed = {
+    ChirpLadder.capture(['docker', 'cp', new File(ladderRoot, 'db/seed.sql').absolutePath,
+                         'grails8-chirp-postgres:/tmp/seed.sql'], ladderRoot, new File(ladderDirectory, 'seed-copy.txt'))
+}
+def reseed = { String db, File log ->
+    int seed = ChirpLadder.run(dockerPsql(db, ['-v', 'ON_ERROR_STOP=1', '-q', '-f', '/tmp/seed.sql']), ladderRoot, [:], log)
+    int analyze = ChirpLadder.run(dockerPsql(db, ['-v', 'ON_ERROR_STOP=1', '-q', '-c', 'ANALYZE;']), ladderRoot, [:],
+            new File(log.parentFile, log.name.replace('.txt', '-analyze.txt')))
+    if (seed != 0 || analyze != 0) {
+        throw new GradleException("Reseed failed: seed=${seed} analyze=${analyze}; see ${log}")
+    }
+    "seed=${seed} analyze=${analyze}"
+}
+def withApp = { String label, Map config, File war, File out, File err, List extra, Closure action ->
+    if (!war.isFile()) {
+        throw new GradleException("Missing ${war}; run ladderWars first")
+    }
+    ChirpLadder.requireFreePort(config.port)
+    File java = launchers[config.jdk].get().executablePath.asFile
+    def args = [java.absolutePath, '-Dgrails.env=loadtest', '-Xms1g', '-Xmx1g', '-XX:+UseG1GC',
+                '-XX:ActiveProcessorCount=12'] + config.jvm + ['-jar', war.absolutePath,
+                '--spring.profiles.active=loadtest'] + config.extra + extra
+    Process app = ChirpLadder.start(args, new File(ladderRoot, config.app), config.vars, out, err)
+    Thread shutdown = new Thread({ ChirpLadder.stop(app) } as Runnable, "${label}-app-cleanup")
+    Runtime.runtime.addShutdownHook(shutdown)
+    try {
+        ChirpLadder.ready(app, "http://localhost:${config.port}")
+        logProgress("${label} started pid=${app.pid()} ready=true args=${args.drop(1).join(' ')} vars=${config.vars.collect { k, v -> "${k}=${v}" }.join(' ')}")
+        action(app, new File(java.parentFile, windows ? 'jcmd.exe' : 'jcmd'))
+    } finally {
+        try {
+            ChirpLadder.stop(app)
+        } finally {
+            Runtime.runtime.removeShutdownHook(shutdown)
+        }
+        Thread.sleep(3_000)
+        int timeouts = [out, err].unique().sum { f -> f.exists() ? f.readLines('UTF-8').count { it.contains('Connection is not available') } : 0 }
+        logProgress("${label} stopped; pool timeout lines=${timeouts}")
+    }
+}
+
+tasks.register('ladderWars') {
+    group = 'load test'
+    description = 'Build the six ladder war variants using isolated child wrapper invocations.'
+    notCompatibleWithConfigurationCache('Runs child builds with different project properties')
+    doLast {
+        ladderDirectory.mkdirs()
+        def variants = [
+                'naive': ['baseline', '-PchirpCompileStatic=false', '-PgroovyIndy=false'],
+                'naive-indy': ['baseline', '-PchirpCompileStatic=false', '-PgroovyIndy=true'],
+                'static': ['baseline'],
+                'optimized-j21-dyn': ['optimized', '-PchirpJava=21', '-PchirpCompileStatic=false'],
+                'optimized-j21-static': ['optimized', '-PchirpJava=21'],
+                'optimized': ['optimized']
+        ]
+        variants.each { name, variant ->
+            File log = new File(ladderDirectory, "${name}-build.txt")
+            int exit = ChirpLadder.run(wrapper([":${variant[0]}:bootWar"] + variant.drop(1) + ['--rerun-tasks']),
+                    ladderRoot, gradleEnvironment(), log)
+            if (exit != 0) {
+                throw new GradleException("${name} build failed (${exit}); see ${log}\n${log.getText('UTF-8')}")
+            }
+            def wars = new File(ladderRoot, "${variant[0]}/build/libs").listFiles().findAll {
+                it.name.startsWith('chirp-') && it.name.endsWith('.war') && !it.name.endsWith('-plain.war')
+            }
+            if (wars.size() != 1) {
+                throw new GradleException("Expected one boot war for ${name}, found ${wars*.name}")
+            }
+            File target = new File(ladderDirectory, "${name}.war")
+            Files.copy(wars[0].toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING)
+            logger.lifecycle("Built ${target.name} (${target.length()} bytes)")
+        }
+    }
+}
+
+tasks.register('ladder') {
+    group = 'load test'
+    description = 'Run an ordered -Players=S0,S1,G1 list, with -Pruns=3 and -Phold=60. Reseeds app data.'
+    notCompatibleWithConfigurationCache('Owns app processes and invokes child load builds')
+    doLast {
+        List<String> selected = propertyValue('layers', '').split(',').collect { it.trim() }.findAll { it }
+        int runs = propertyValue('runs', '3') as int
+        int hold = propertyValue('hold', '60') as int
+        if (!selected || runs < 1 || hold < 1) {
+            throw new GradleException('Require -Players=<comma-separated layers>, positive -Pruns and -Phold')
+        }
+        def configurations = selected.collect { label ->
+            // L1i is a real variant, not an alias for L1; all other suffixes are rerun labels.
+            def config = layers[label] ?: layers[label.replaceFirst(/^([A-Z]\d+)[a-z]$/, '$1')]
+            if (!config) {
+                throw new GradleException("Unknown layer ${label}; available: ${layers.keySet().join(',')}")
+            }
+            if (!new File(ladderDirectory, "${config.war}.war").isFile()) {
+                throw new GradleException("Missing ${config.war}.war; run ladderWars first")
+            }
+            config
+        }
+        ladderDirectory.mkdirs()
+        File csv = new File(ladderDirectory, 'runs.csv')
+        if (!csv.exists()) {
+            csv.setText('layer,run,rps,ok,ko,flaky,hold,started,ended\n', 'UTF-8')
+        }
+        logProgress("batch start: ${selected.join(',')} runs=${runs} hold=${hold}")
+        copySeed()
+        selected.eachWithIndex { String label, int index ->
+            Map config = configurations[index]
+            quiet("${label} pre-layer", true)
+            File out = new File(ladderDirectory, "${label}-app.out.txt")
+            File err = new File(ladderDirectory, "${label}-app.err.txt")
+            withApp(label, config, new File(ladderDirectory, "${config.war}.war"), out, err, []) { Process app, File jcmd ->
+                def diagnostic = { String command ->
+                    ChirpLadder.capture([jcmd.absolutePath, app.pid(), command], ladderRoot,
+                            new File(ladderDirectory, "${label}-${command}.txt"))
+                }
+                logProgress("${label} vm: ${diagnostic('VM.version').readLines().join(' | ')}")
+                String flags = diagnostic('VM.flags')
+                if (config.jvm.contains(compact)) {
+                    logProgress("${label} compactHeaders=${flags.contains('+UseCompactObjectHeaders')}")
+                }
+                Thread.sleep(3_000)
+                String connections = ChirpLadder.capture(dockerPsql('postgres', ['-t', '-A', '-c',
+                        "SELECT count(*) FROM pg_stat_activity WHERE datname = '${config.db}';"]), ladderRoot,
+                        new File(ladderDirectory, "${label}-connections.txt"))
+                logProgress("${label} db connections=${connections}")
+                logProgress("${label} platform http-nio exec threads=${(diagnostic('Thread.print') =~ /http-nio-\d+-exec-/).count}")
+                for (int run = 1; run <= runs; run++) {
+                    quiet("${label} run ${run}")
+                    String started = Instant.now().toString()
+                    String seed = reseed(config.db, new File(ladderDirectory, "${label}-run${run}-seed.txt"))
+                    String baseUrl = "-PbaseUrl=http://localhost:${config.port}"
+                    int warm = ChirpLadder.run(wrapper([':warm', baseUrl, '-Paccounts=2000', '-Pconcurrency=20']),
+                            ladderRoot, gradleEnvironment(), new File(ladderDirectory, "${label}-run${run}-warm.txt"))
+                    if (warm != 0) {
+                        throw new GradleException("${label} run ${run} warm failed (${warm}); see warm log")
+                    }
+                    File loadLog = new File(ladderDirectory, "${label}-run${run}-load.txt")
+                    File cpuFile = new File(ladderDirectory, "${label}-run${run}-cpu.csv")
+                    File statsLog = new File(ladderDirectory, "${label}-run${run}-docker-stats.txt")
+                    cpuFile.setText('', 'UTF-8')
+                    def sampling = new AtomicBoolean(true)
+                    def samplingFailure = new AtomicReference<Throwable>()
+                    Thread sampler = new Thread({
+                        try {
+                            for (int sample = 0; sample < (hold + 40).intdiv(5) && sampling.get(); sample++) {
+                                Instant time = Instant.now()
+                                double appCpu = ChirpLadder.cpuSeconds(app.toHandle())
+                                double gatlingCpu = ChirpLadder.gatlingCpuSeconds()
+                                String pg = ChirpLadder.capture(['docker', 'stats', '--no-stream', '--format', '{{.CPUPerc}}',
+                                        'grails8-chirp-postgres'], ladderRoot, statsLog).replace('%', '').trim()
+                                cpuFile.append("${time},${appCpu},${gatlingCpu},${pg}\n", 'UTF-8')
+                                Thread.sleep(4_000)
+                            }
+                        } catch (InterruptedException ignored) {
+                            // The load finished; terminate the sampler and any owned docker child.
+                        } catch (Throwable failure) {
+                            samplingFailure.set(failure)
+                        }
+                    } as Runnable, "${label}-cpu-sampler")
+                    int load
+                    sampler.start()
+                    try {
+                        load = ChirpLadder.run(wrapper([':loadTest', baseUrl, '-Pusers=40', '-PrampSeconds=15', "-PholdSeconds=${hold}"]),
+                                ladderRoot, gradleEnvironment(), loadLog)
+                    } finally {
+                        sampling.set(false)
+                        sampler.interrupt()
+                        sampler.join()
+                    }
+                    String ended = Instant.now().toString()
+                    boolean flaky = ChirpLadder.flaky()
+                    Map result = ChirpLadder.gatling(loadLog)
+                    csv.append("${label},${run},${result.rps},${result.ok},${result.ko},${flaky},${hold},${started},${ended}\n", 'UTF-8')
+                    logProgress("${label} run ${run} rps=${result.rps} ok=${result.ok} ko=${result.ko} ${seed} warm=${warm} load=${load} flakyAtEnd=${flaky} ${ChirpLadder.cpuSummary(cpuFile)}")
+                    if (samplingFailure.get()) {
+                        throw new GradleException('CPU sampling failed', samplingFailure.get())
+                    }
+                    if (load != 0) {
+                        throw new GradleException("${label} run ${run} load failed (${load}); see ${loadLog}")
+                    }
+                }
+            }
+        }
+        logProgress("batch done: ${selected.join(',')}")
+    }
+}
+
+tasks.register('verifyGorm') {
+    group = 'load test'
+    description = 'Compare G0-G3 single-request SQL counts and JSON hashes on existing data; -PverifyWar=<old war> checks GBefore against saved G0.'
+    notCompatibleWithConfigurationCache('Owns app processes and reads live SQL logs')
+    doLast {
+        File directory = new File(ladderDirectory, 'gorm')
+        directory.mkdirs()
+        String override = propertyValue('verifyWar', '')
+        File war = override ? file(override) : new File(ladderDirectory, 'static.war')
+        File reference = new File(directory, 'G0-results.json')
+        if (override && !reference.isFile()) {
+            throw new GradleException('Run verifyGorm without verifyWar first to establish the G0 reference')
+        }
+        def summary = []
+        (override ? ['GBefore'] : ['G0', 'G1', 'G2', 'G3']).each { String label ->
+            Map config = layers[label == 'GBefore' ? 'G0' : label]
+            File sqlLog = new File(directory, "${label}-sql.txt")
+            withApp(label, config, war, sqlLog, sqlLog, ['--logging.level.org.hibernate.SQL=DEBUG']) { Process app, File jcmd ->
+                def results = [config: label, javaPid: app.pid()]
+                ['timeline': '/api/timelines/user1?max=20', 'account': '/api/accounts/user1'].each { name, path ->
+                    String url = "http://localhost:8080${path}"
+                    ChirpLadder.get(url)
+                    Thread.sleep(2_000)
+                    int before = sqlLog.readLines('UTF-8').size()
+                    File body = new File(directory, name == 'timeline' ? "${label}-user1.json" : "${label}-account-user1.json")
+                    body.bytes = ChirpLadder.get(url)
+                    Thread.sleep(2_000)
+                    List<String> lines = sqlLog.readLines('UTF-8')
+                    int statements = lines.drop(before).count { it =~ /org\.hibernate\.SQL\s*:/ }
+                    if (statements == 0) {
+                        throw new GradleException("No SQL logger lines found for ${label} ${name}")
+                    }
+                    String hash = ChirpLadder.sha256(body)
+                    results[name] = [beforeLineCount: before, afterLineCount: lines.size(), statements: statements, sha256: hash]
+                    logger.lifecycle("${label} ${name}: statements=${statements} lines=${before}-${lines.size()} sha256=${hash}")
+                    if (label != 'G0') {
+                        def baseline = new JsonSlurper().parse(reference)
+                        if (hash != baseline[name].sha256) {
+                            throw new GradleException("JSON mismatch: ${label} ${name} versus G0")
+                        }
+                    }
+                }
+                new File(directory, "${label}-results.json").setText(JsonOutput.prettyPrint(JsonOutput.toJson(results)) + '\n', 'UTF-8')
+                summary << results
+            }
+        }
+        String table = 'config | timeline statements | account statements | timeline SHA256 | account SHA256\n' +
+                summary.collect { "${it.config} | ${it.timeline.statements} | ${it.account.statements} | ${it.timeline.sha256} | ${it.account.sha256}" }.join('\n') + '\n'
+        new File(directory, 'summary.txt').setText(table, 'UTF-8')
+        logger.lifecycle(table)
+    }
+}

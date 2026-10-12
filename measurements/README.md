@@ -11,10 +11,14 @@ Raw data behind every number in the [top-level README](../README.md). Local path
 | `cpu/` | CPU samples, nominally every 5 seconds (the real intervals vary and are in the timestamps), during each run of the `F` and `H` layers: timestamp, application JVM CPU seconds, a Gatling column that is not reliable and not used, Postgres CPU percent from `docker stats` (100 is one core) |
 | `gatling/` | Gatling console output for every run |
 | `app/` | Application stdout and stderr per layer |
-| `gorm-verification/` | SQL statement counts per page and JSON SHA256 comparison for the GORM switches (`gorm.md`), the Hibernate SQL logs and response bodies they came from, the bytecode checks for each war (`builds.md`), and the script used |
-| `scripts/` | The runner as used (`run.ps1`) and the scripts that queued it |
+| `gorm-verification/` | SQL statement counts per page and JSON SHA256 comparison for the GORM switches (`gorm.md`), the Hibernate SQL logs and response bodies they came from, and the bytecode checks for each war (`builds.md`). Reproduce the single-request checks with `.\gradlew.bat verifyGorm` after `ladderWars`; new evidence goes to `build/ladder/gorm/` |
+| Runner (formerly `scripts/`) | Gradle tasks in `gradle/ladder.gradle`: `.\gradlew.bat ladderWars` builds the variants, then `.\gradlew.bat ladder '-Players=S0,S1,G1' -Pruns=3 -Phold=60` runs layers in order. Quote comma-separated arguments in PowerShell. Use `-Phold=180` for the F series. New logs, CPU samples, and the ledger go to `build/ladder/` |
 
-`gorm.md` and `builds.md` also mention build logs, `javap` dumps, and `compare-off-sql.ps1`. Those intermediate files are not published; the checks they support are summarized in those two files.
+The published data was collected with an earlier script version of this runner, and the Gradle tasks follow the same protocol.
+
+The runner uses `ProcessHandle` for process discovery and CPU time, with native WMI through JNA for missing Windows command-line metadata so the competing-test-JVM guard works without shell scripts.
+
+`gorm.md` and `builds.md` also mention build logs, `javap` dumps, and an off-switch SQL comparison. Those intermediate files are not published; the checks they support are summarized in those two files.
 
 Rows with `flaky` set to `True` overlapped another project's tests on the machine and are excluded from the top-level README.
 

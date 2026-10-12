@@ -230,7 +230,7 @@ The cache cuts Postgres CPU from about 6 cores to under half a core. At step 7 n
 | Database | Postgres 16 in Docker, host port 5438 |
 | Pool | 48 connections, 48 minimum idle, 2 second connection timeout, except step 1 (10, 10, 30 seconds) |
 
-Every run's raw data, logs, CPU samples, and the runner scripts are in [measurements](measurements/README.md).
+Every run's raw data, logs, CPU samples, and the Gradle runner protocol are described in [measurements](measurements/README.md).
 
 `ActiveProcessorCount` changes how many processors each JVM reports. It does not reserve CPUs. One app ran at a time, on a fresh JVM per step. The runner checked for other projects' test JVMs before and after every run, and runs that overlapped one are excluded and noted.
 
@@ -269,6 +269,8 @@ Start Postgres and print the Corretto homes the toolchain resolver selected:
 docker compose -p grails8-chirp up -d
 .\gradlew.bat correttoHomes
 ```
+
+To run a step through Gradle, build all variants once with `.\gradlew.bat ladderWars`, then use `.\gradlew.bat ladder -Players=G1 -Pruns=3 -Phold=60` for step 3, or `.\gradlew.bat ladder -Players=F2 -Pruns=3 -Phold=180` for step 7. Steps 1 to 7 use S0, S1, G1, G2, G3, P2, and F2 respectively. Comma-separated layer lists run in order; a trailing lowercase letter reruns a base layer under a new label (for example, G2b). The runner launches and stops each app, reseeds, analyzes, warms, and measures it; results land in `build/ladder/`. The manual instructions below remain available.
 
 Build the war for the step (see Switches), then start it with the step's switches and the Corretto `java` for that step, not whatever `java` is on `PATH`. Steps 1 and 2 use Corretto 21, steps 3 to 7 use Corretto 25. Baseline listens on 8080, optimized on 8081. For example, step 3 in PowerShell, with `$corretto25` set to the home `correttoHomes` printed:
 
