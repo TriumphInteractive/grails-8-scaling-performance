@@ -6,6 +6,8 @@ spring:
 server:
   port: 8080
 dataSource: &loadtestDataSource
+  pooled: true
+  type: demo.chirp.ChirpHikariDataSource
   dbCreate: none
   url: ${CHIRP_JDBC_URL:jdbc:postgresql://localhost:5438/chirp_baseline}
   username: ${CHIRP_JDBC_USER:chirp}

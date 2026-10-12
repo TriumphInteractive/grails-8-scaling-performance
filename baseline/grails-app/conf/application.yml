@@ -30,6 +30,7 @@ environments:
       username: chirp
       password: chirp
       pooled: true
+      type: demo.chirp.ChirpHikariDataSource
     grails:
       plugin:
         databasemigration:
