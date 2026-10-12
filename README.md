@@ -210,7 +210,7 @@ Virtual threads solve a different shortage: running out of threads. Tomcat has 2
 
 At step 6 the mixed workload averages about 40 / 2661 = 15 ms per request end to end. A timeline read there is two statements, one of them a heavier query with `LATERAL`, correlated counts, and `json_agg`; an account read is a handful of grouped queries. Only the cache in step 7 takes the database off the hot path for most requests.
 
-CPU use was sampled every 5 seconds during the step 5 and step 7 configurations (Corretto 25, `compileStatic`, platform threads). Cores busy, median of the three per-run medians:
+CPU use was sampled, nominally every 5 seconds, during the step 5 and step 7 configurations (Corretto 25, `compileStatic`, platform threads). Cores busy, median of the three per-run medians:
 
 | Point | Application JVM | Postgres |
 |---|---:|---:|
@@ -229,6 +229,8 @@ The cache cuts Postgres CPU from about 6 cores to under half a core. At step 7 n
 | Load | 40 closed-loop users: 85 percent timeline reads, 10 percent account reads, 5 percent chirp creates |
 | Database | Postgres 16 in Docker, host port 5438 |
 | Pool | 48 connections, 48 minimum idle, 2 second connection timeout, except step 1 (10, 10, 30 seconds) |
+
+Every run's raw data, logs, CPU samples, and the runner scripts are in [measurements](measurements/README.md).
 
 `ActiveProcessorCount` changes how many processors each JVM reports. It does not reserve CPUs. One app ran at a time, on a fresh JVM per step. The runner checked for other projects' test JVMs before and after every run, and runs that overlapped one are excluded and noted.
 

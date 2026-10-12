@@ -1,0 +1,103 @@
+
+>                                                                            <
+>                            ____           _ _                              <
+>                           / ___|_ __ __ _(_) |___                          <
+>                          | |  _| '__/ _` | | / __|                         <
+>                          | |_| | | | (_| | | \__ \                         <
+>                           \____|_|  \__,_|_|_|___/                         <
+>                          https://grails.apache.org                         <
+>                                                                            <
+        baseline: 0.1 | JVM: Amazon.com Inc. 25.0.4.1 | Grails: 8.0.0         
+    Groovy: 5.1.3 | Spring Boot: 4.1.1 | Spring: 7.0.9 | Tomcat: 11.0.24.0    
+
+2026-10-11T17:41:04.965-04:00  INFO 4064 --- [           main] demo.chirp.Application                   : Starting Application v0.1 using Java 25.0.4.1 with PID 4064 (<home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war started by <user> in <home>\Documents\IdeaProjects\grails-8-scaling-performance\baseline)
+2026-10-11T17:41:04.968-04:00  INFO 4064 --- [           main] demo.chirp.Application                   : The following 1 profile is active: "loadtest"
+2026-10-11T17:41:05.115-04:00  INFO 4064 --- [           main] g.plugins.DefaultGrailsPluginManager     : Loaded 21 Grails plugins in load order: [dataBinding (8.0.0), sitemesh3 (8.0.0), databaseMigration (8.0.0), restResponder (8.0.0), i18n (8.0.0), core (8.0.0), eventBus (8.0.0), groovyPages (8.0.0), urlMappings (8.0.0), controllers (8.0.0), codecs (8.0.0), mimeTypes (8.0.0), dataSource (8.0.0), assetPipeline (5.2.0), scaffolding (8.0.0), domainClass (8.0.0), converters (8.0.0), fields (8.0.0), hibernate (8.0.0), interceptors (8.0.0), services (8.0.0)]
+2026-10-11T17:41:08.396-04:00  INFO 4064 --- [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.10.Final
+2026-10-11T17:41:08.865-04:00  INFO 4064 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-11T17:41:09.071-04:00  INFO 4064 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@56a6aadb
+2026-10-11T17:41:09.073-04:00  INFO 4064 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-11T17:41:09.172-04:00  INFO 4064 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5438/chirp_baseline]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.15
+	Default catalog/schema: chirp_baseline/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-11T17:41:11.548-04:00  INFO 4064 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-10-11T17:41:11.568-04:00  INFO 4064 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-11T17:41:11.569-04:00  INFO 4064 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-11T17:41:11.696-04:00  INFO 4064 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 6689 ms
+2026-10-11T17:41:15.643-04:00  WARN 4064 --- [           main] grails.events.bus.EventBusBuilder        : No event bus implementations found on classpath, using synchronous implementation.
+2026-10-11T17:41:16.256-04:00  INFO 4064 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-11T17:41:16.436-04:00  INFO 4064 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring GrailsDispatcherServlet 'dispatcherServletRegistration'
+2026-10-11T17:41:16.437-04:00  INFO 4064 --- [           main] o.g.w.s.mvc.GrailsDispatcherServlet      : Initializing Servlet 'dispatcherServletRegistration'
+2026-10-11T17:41:16.440-04:00  INFO 4064 --- [           main] o.g.w.s.mvc.GrailsDispatcherServlet      : Completed initialization in 3 ms
+2026-10-11T17:41:16.441-04:00  INFO 4064 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-10-11T17:41:16.776-04:00  INFO 4064 --- [           main] liquibase.database                       : Set default schema name to public
+2026-10-11T17:41:17.901-04:00  INFO 4064 --- [           main] liquibase.changelog                      : Reading from public.databasechangelog
+2026-10-11T17:41:17.994-04:00  INFO 4064 --- [           main] liquibase.ui                             : Database is up to date, no changesets to execute
+2026-10-11T17:41:17.999-04:00  INFO 4064 --- [           main] liquibase.changelog                      : Reading from public.databasechangelog
+
+UPDATE SUMMARY
+Run:                          0
+Previously run:               2
+Filtered out:                 0
+-------------------------------
+Total change sets:            2
+
+2026-10-11T17:41:18.016-04:00  INFO 4064 --- [           main] liquibase.util                           : UPDATE SUMMARY
+2026-10-11T17:41:18.017-04:00  INFO 4064 --- [           main] liquibase.util                           : Run:                          0
+2026-10-11T17:41:18.017-04:00  INFO 4064 --- [           main] liquibase.util                           : Previously run:               2
+2026-10-11T17:41:18.017-04:00  INFO 4064 --- [           main] liquibase.util                           : Filtered out:                 0
+2026-10-11T17:41:18.017-04:00  INFO 4064 --- [           main] liquibase.util                           : -------------------------------
+2026-10-11T17:41:18.017-04:00  INFO 4064 --- [           main] liquibase.util                           : Total change sets:            2
+2026-10-11T17:41:18.019-04:00  INFO 4064 --- [           main] liquibase.util                           : Update summary generated
+2026-10-11T17:41:18.066-04:00  INFO 4064 --- [           main] liquibase.lockservice                    : Successfully released change log lock
+2026-10-11T17:41:18.070-04:00  INFO 4064 --- [           main] liquibase.command                        : Command execution complete
+2026-10-11T17:41:18.543-04:00  INFO 4064 --- [           main] demo.chirp.Application                   : Started Application in 14.329 seconds (process running for 15.183)
+2026-10-11T17:41:18.691-04:00  INFO 4064 --- [           main] grails.boot.GrailsApp                    : Application starting in environment: loadtest
+Grails application running at http://localhost:8080 in environment: loadtest
+2026-10-11T17:41:29.197-04:00 DEBUG 4064 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.handle=?
+2026-10-11T17:41:29.268-04:00 DEBUG 4064 --- [nio-8080-exec-3] org.hibernate.SQL                        : select f1_0.id,f1_0.followed_at,f1_0.followee_id,f1_0.follower_id,f1_0.version from follow f1_0 where f1_0.follower_id=?
+2026-10-11T17:41:29.308-04:00 DEBUG 4064 --- [nio-8080-exec-3] org.hibernate.SQL                        : select c1_0.id,c1_0.author_id,c1_0.body,c1_0.posted_at,c1_0.reply_to_id,c1_0.version from chirp c1_0 where c1_0.author_id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) order by c1_0.posted_at desc fetch first ? rows only
+2026-10-11T17:41:29.385-04:00 DEBUG 4064 --- [nio-8080-exec-3] org.hibernate.SQL                        : select c2_0.id,count(c1_0.id) from cheer c1_0 join chirp c2_0 on c2_0.id=c1_0.chirp_id where c2_0.id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) group by 1
+2026-10-11T17:41:29.399-04:00 DEBUG 4064 --- [nio-8080-exec-3] org.hibernate.SQL                        : select rt1_0.id,count(c1_0.id) from chirp c1_0 join chirp rt1_0 on rt1_0.id=c1_0.reply_to_id where rt1_0.id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) group by 1
+2026-10-11T17:41:29.409-04:00 DEBUG 4064 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id = any (?)
+2026-10-11T17:41:29.434-04:00 DEBUG 4064 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id = any (?)
+2026-10-11T17:41:29.442-04:00 DEBUG 4064 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id = any (?)
+2026-10-11T17:41:29.446-04:00 DEBUG 4064 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id = any (?)
+2026-10-11T17:41:31.513-04:00 DEBUG 4064 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.handle=?
+2026-10-11T17:41:31.517-04:00 DEBUG 4064 --- [nio-8080-exec-4] org.hibernate.SQL                        : select f1_0.id,f1_0.followed_at,f1_0.followee_id,f1_0.follower_id,f1_0.version from follow f1_0 where f1_0.follower_id=?
+2026-10-11T17:41:31.528-04:00 DEBUG 4064 --- [nio-8080-exec-4] org.hibernate.SQL                        : select c1_0.id,c1_0.author_id,c1_0.body,c1_0.posted_at,c1_0.reply_to_id,c1_0.version from chirp c1_0 where c1_0.author_id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) order by c1_0.posted_at desc fetch first ? rows only
+2026-10-11T17:41:31.544-04:00 DEBUG 4064 --- [nio-8080-exec-4] org.hibernate.SQL                        : select c2_0.id,count(c1_0.id) from cheer c1_0 join chirp c2_0 on c2_0.id=c1_0.chirp_id where c2_0.id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) group by 1
+2026-10-11T17:41:31.547-04:00 DEBUG 4064 --- [nio-8080-exec-4] org.hibernate.SQL                        : select rt1_0.id,count(c1_0.id) from chirp c1_0 join chirp rt1_0 on rt1_0.id=c1_0.reply_to_id where rt1_0.id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) group by 1
+2026-10-11T17:41:31.548-04:00 DEBUG 4064 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id = any (?)
+2026-10-11T17:41:31.556-04:00 DEBUG 4064 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id = any (?)
+2026-10-11T17:41:31.558-04:00 DEBUG 4064 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id = any (?)
+2026-10-11T17:41:31.560-04:00 DEBUG 4064 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id = any (?)
+2026-10-11T17:41:33.648-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.handle=?
+2026-10-11T17:41:33.655-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.author_id=?
+2026-10-11T17:41:33.658-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select count(f1_0.id) from follow f1_0 where f1_0.follower_id=?
+2026-10-11T17:41:33.661-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select count(f1_0.id) from follow f1_0 where f1_0.followee_id=?
+2026-10-11T17:41:33.666-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select c1_0.id,c1_0.author_id,c1_0.body,c1_0.posted_at,c1_0.reply_to_id,c1_0.version from chirp c1_0 where c1_0.author_id=? order by c1_0.posted_at desc fetch first ? rows only
+2026-10-11T17:41:33.673-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select c2_0.id,count(c1_0.id) from cheer c1_0 join chirp c2_0 on c2_0.id=c1_0.chirp_id where c2_0.id in (?,?,?,?,?,?,?,?,?,?) group by 1
+2026-10-11T17:41:33.676-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select rt1_0.id,count(c1_0.id) from chirp c1_0 join chirp rt1_0 on rt1_0.id=c1_0.reply_to_id where rt1_0.id in (?,?,?,?,?,?,?,?,?,?) group by 1
+2026-10-11T17:41:33.680-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id = any (?)
+2026-10-11T17:41:33.682-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id = any (?)
+2026-10-11T17:41:33.685-04:00 DEBUG 4064 --- [nio-8080-exec-6] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id = any (?)
+2026-10-11T17:41:35.740-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.handle=?
+2026-10-11T17:41:35.742-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.author_id=?
+2026-10-11T17:41:35.744-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(f1_0.id) from follow f1_0 where f1_0.follower_id=?
+2026-10-11T17:41:35.745-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(f1_0.id) from follow f1_0 where f1_0.followee_id=?
+2026-10-11T17:41:35.748-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select c1_0.id,c1_0.author_id,c1_0.body,c1_0.posted_at,c1_0.reply_to_id,c1_0.version from chirp c1_0 where c1_0.author_id=? order by c1_0.posted_at desc fetch first ? rows only
+2026-10-11T17:41:35.754-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select c2_0.id,count(c1_0.id) from cheer c1_0 join chirp c2_0 on c2_0.id=c1_0.chirp_id where c2_0.id in (?,?,?,?,?,?,?,?,?,?) group by 1
+2026-10-11T17:41:35.758-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select rt1_0.id,count(c1_0.id) from chirp c1_0 join chirp rt1_0 on rt1_0.id=c1_0.reply_to_id where rt1_0.id in (?,?,?,?,?,?,?,?,?,?) group by 1
+2026-10-11T17:41:35.762-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id = any (?)
+2026-10-11T17:41:35.764-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id = any (?)
+2026-10-11T17:41:35.766-04:00 DEBUG 4064 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id = any (?)

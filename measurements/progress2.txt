@@ -1,0 +1,407 @@
+2026-10-11T17:44:54.7546049-04:00 batch start: G0,G1,G2,G3 runs=3 hold=60
+2026-10-11T17:44:54.8456390-04:00 G0,G1,G2,G3 UNKNOWN
+2026-10-11T17:44:54.8543993-04:00 batch done: G0,G1,G2,G3
+2026-10-11T17:55:06.0273586-04:00 batch start: G0,G1,G2,G3 runs=3 hold=60
+2026-10-11T17:55:06.3123831-04:00 G0 pre-layer quiet (waited=False)
+2026-10-11T17:55:24.7975279-04:00 G0 started pid=2652 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest vars=CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T17:55:25.1031399-04:00 G0 vm: 2652: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T17:55:28.5214588-04:00 G0 db connections=48
+2026-10-11T17:55:28.8080474-04:00 G0 platform http-nio exec threads=10
+2026-10-11T18:07:12.1624942-04:00 batch start: G0,G1,G2,G3 runs=3 hold=60
+2026-10-11T18:07:12.6157648-04:00 G0 pre-layer quiet (waited=False)
+2026-10-11T18:07:41.5678315-04:00 G0 started pid=26120 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48
+2026-10-11T18:07:41.9164135-04:00 G0 vm: 26120: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T18:07:45.4366271-04:00 G0 db connections=48
+2026-10-11T18:07:45.7142601-04:00 G0 platform http-nio exec threads=10
+2026-10-11T18:07:45.8419575-04:00 G0 run 1 quiet (waited=False)
+2026-10-11T18:09:52.0041517-04:00 G0 run 1 rps=191.95 ok=15356 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:09:52.1315661-04:00 G0 run 2 quiet (waited=False)
+2026-10-11T18:11:42.2822057-04:00 G0 run 2 rps=220.09 ok=17607 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:11:42.4116022-04:00 G0 run 3 quiet (waited=False)
+2026-10-11T18:13:31.6726325-04:00 G0 run 3 rps=211 ok=16880 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:13:35.2672612-04:00 G0 stopped; pool timeout lines=0
+2026-10-11T18:13:35.5211844-04:00 G1 pre-layer quiet (waited=False)
+2026-10-11T18:13:58.9607949-04:00 G1 started pid=17884 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48
+2026-10-11T18:13:59.2271838-04:00 G1 vm: 17884: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T18:14:02.6065913-04:00 G1 db connections=48
+2026-10-11T18:14:02.8624731-04:00 G1 platform http-nio exec threads=10
+2026-10-11T18:14:02.9712758-04:00 G1 run 1 quiet (waited=False)
+2026-10-11T18:15:49.7773562-04:00 G1 run 1 rps=377.76 ok=30221 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:15:49.8501230-04:00 G1 run 2 quiet (waited=False)
+2026-10-11T18:17:30.0304173-04:00 G1 run 2 rps=390.12 ok=31210 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:17:30.1068746-04:00 G1 run 3 quiet (waited=False)
+2026-10-11T18:19:10.3907352-04:00 G1 run 3 rps=383.8 ok=30704 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:19:13.4259097-04:00 G1 stopped; pool timeout lines=0
+2026-10-11T18:19:13.6361929-04:00 G2 pre-layer quiet (waited=False)
+2026-10-11T18:19:34.4580949-04:00 G2 started pid=27236 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -Dchirp.gorm.entityBatchSize=50 -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48
+2026-10-11T18:19:34.6763667-04:00 G2 vm: 27236: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T18:19:38.0233642-04:00 G2 db connections=48
+2026-10-11T18:19:38.2380010-04:00 G2 platform http-nio exec threads=10
+2026-10-11T18:19:38.3252367-04:00 G2 run 1 quiet (waited=False)
+2026-10-11T18:21:25.8101558-04:00 G2 run 1 rps=431.05 ok=34484 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:21:25.8902539-04:00 G2 run 2 quiet (waited=False)
+2026-10-11T18:23:05.6299125-04:00 G2 run 2 rps=458.1 ok=36648 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:23:05.7149073-04:00 G2 run 3 quiet (waited=False)
+2026-10-11T18:24:47.5053142-04:00 G2 run 3 rps=444.57 ok=35566 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:24:50.5307088-04:00 G2 stopped; pool timeout lines=0
+2026-10-11T18:24:50.7519958-04:00 G3 pre-layer quiet (waited=False)
+2026-10-11T18:25:14.0271595-04:00 G3 started pid=26528 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -Dchirp.gorm.entityBatchSize=50 -Dchirp.gorm.groupedCounts=true -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48
+2026-10-11T18:25:14.2459918-04:00 G3 vm: 26528: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T18:25:17.6037990-04:00 G3 db connections=48
+2026-10-11T18:25:17.8241344-04:00 G3 platform http-nio exec threads=10
+2026-10-11T18:25:17.9167615-04:00 G3 run 1 quiet (waited=False)
+2026-10-11T18:25:43.5065031-04:00 batch start: G2b,G3,P0,P1,P2,P3,P4,C0,C1,C2 runs=3 hold=60
+2026-10-11T18:39:18.5780069-04:00 G2b pre-layer quiet (waited=True)
+2026-10-11T18:39:37.9037070-04:00 G2b started pid=24672 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -Dchirp.gorm.entityBatchSize=50 -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 vars=CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T18:39:38.1377046-04:00 G2b vm: 24672: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T18:39:41.4760835-04:00 G2b db connections=48
+2026-10-11T18:39:41.7071206-04:00 G2b platform http-nio exec threads=10
+2026-10-11T18:39:41.7868398-04:00 G2b run 1 quiet (waited=False)
+2026-10-11T18:41:26.1344287-04:00 G2b run 1 rps=456.23 ok=36498 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:41:26.2135248-04:00 G2b run 2 quiet (waited=False)
+2026-10-11T18:43:04.9562082-04:00 G2b run 2 rps=466.84 ok=37347 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:43:05.0143071-04:00 G2b run 3 quiet (waited=False)
+2026-10-11T18:44:46.7307115-04:00 G2b run 3 rps=441.2 ok=35296 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=True
+2026-10-11T18:44:50.0282213-04:00 G2b stopped; pool timeout lines=0
+2026-10-11T18:51:07.3342054-04:00 G3 pre-layer quiet (waited=True)
+2026-10-11T18:51:23.4506189-04:00 G3 started pid=1908 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -Dchirp.gorm.entityBatchSize=50 -Dchirp.gorm.groupedCounts=true -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 vars=CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T18:51:23.6663639-04:00 G3 vm: 1908: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T18:51:27.7418284-04:00 G3 db connections=48
+2026-10-11T18:51:28.2526988-04:00 G3 platform http-nio exec threads=10
+2026-10-11T18:57:15.4838571-04:00 G3 run 1 quiet (waited=True)
+2026-10-11T18:58:56.2027634-04:00 G3 run 1 rps=1273.28 ok=103136 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T18:58:56.2766908-04:00 G3 run 2 quiet (waited=False)
+2026-10-11T19:00:28.8600672-04:00 G3 run 2 rps=1311.15 ok=104892 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:00:28.9308169-04:00 G3 run 3 quiet (waited=False)
+2026-10-11T19:02:01.4022354-04:00 G3 run 3 rps=1359.92 ok=108794 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:02:04.4339822-04:00 G3 stopped; pool timeout lines=0
+2026-10-11T19:17:39.7596504-04:00 P0 pre-layer quiet (waited=True)
+2026-10-11T19:17:58.9226543-04:00 P0 started pid=19308 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-dyn.war --spring.profiles.active=loadtest vars=CHIRP_VIRTUAL_THREADS=false CHIRP_POOL_SIZE=48 CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T19:17:59.1589159-04:00 P0 vm: 19308: | OpenJDK 64-Bit Server VM version 21.0.11+10-LTS | JDK 21.0.11
+2026-10-11T19:18:02.4916335-04:00 P0 db connections=48
+2026-10-11T19:18:02.7687427-04:00 P0 platform http-nio exec threads=10
+2026-10-11T19:18:02.8650367-04:00 P0 run 1 quiet (waited=False)
+2026-10-11T19:19:41.7782186-04:00 P0 run 1 rps=2474.12 ok=197930 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:19:41.8521880-04:00 P0 run 2 quiet (waited=False)
+2026-10-11T19:21:14.3267564-04:00 P0 run 2 rps=2634.44 ok=210755 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:21:14.3973642-04:00 P0 run 3 quiet (waited=False)
+2026-10-11T19:22:47.1444908-04:00 P0 run 3 rps=2345.67 ok=189999 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:22:50.1506915-04:00 P0 stopped; pool timeout lines=0
+2026-10-11T19:22:50.2914087-04:00 P1 pre-layer quiet (waited=False)
+2026-10-11T19:23:09.3731661-04:00 P1 started pid=23904 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-dyn.war --spring.profiles.active=loadtest vars=CHIRP_VIRTUAL_THREADS=false CHIRP_POOL_SIZE=48 CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T19:23:09.5816873-04:00 P1 vm: 23904: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T19:23:12.9063930-04:00 P1 db connections=48
+2026-10-11T19:23:13.1373845-04:00 P1 platform http-nio exec threads=10
+2026-10-11T19:23:13.2203018-04:00 P1 run 1 quiet (waited=False)
+2026-10-11T19:24:51.6825594-04:00 P1 run 1 rps=2370.19 ok=189615 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:24:51.7375387-04:00 P1 run 2 quiet (waited=False)
+2026-10-11T19:26:24.1670985-04:00 P1 run 2 rps=2366.57 ok=189326 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:26:24.2456355-04:00 P1 run 3 quiet (waited=False)
+2026-10-11T19:27:57.2791893-04:00 P1 run 3 rps=2343.76 ok=187501 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:28:00.3027988-04:00 P1 stopped; pool timeout lines=0
+2026-10-11T19:28:00.4067957-04:00 P2 pre-layer quiet (waited=False)
+2026-10-11T19:28:19.6081478-04:00 P2 started pid=4916 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_VIRTUAL_THREADS=false CHIRP_POOL_SIZE=48 CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T19:28:19.8107985-04:00 P2 vm: 4916: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T19:28:23.1576091-04:00 P2 db connections=48
+2026-10-11T19:28:23.3874785-04:00 P2 platform http-nio exec threads=10
+2026-10-11T19:28:23.4690051-04:00 P2 run 1 quiet (waited=False)
+2026-10-11T19:30:02.2729155-04:00 P2 run 1 rps=2458 ok=196640 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:30:02.3420036-04:00 P2 run 2 quiet (waited=False)
+2026-10-11T19:31:35.3010353-04:00 P2 run 2 rps=2362.36 ok=188989 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=True
+2026-10-11T19:49:44.3200384-04:00 P2 run 3 quiet (waited=True)
+2026-10-11T19:51:15.9477403-04:00 P2 run 3 rps=2864.79 ok=232048 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:51:18.9713480-04:00 P2 stopped; pool timeout lines=0
+2026-10-11T19:51:19.1038564-04:00 P3 pre-layer quiet (waited=False)
+2026-10-11T19:51:38.1055438-04:00 P3 started pid=19756 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_VIRTUAL_THREADS=true CHIRP_POOL_SIZE=48 CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T19:51:38.3194167-04:00 P3 vm: 19756: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T19:51:41.6450614-04:00 P3 db connections=48
+2026-10-11T19:51:41.8645382-04:00 P3 platform http-nio exec threads=0
+2026-10-11T19:51:41.9153731-04:00 P3 run 1 quiet (waited=False)
+2026-10-11T19:53:19.4142440-04:00 P3 run 1 rps=2355.74 ok=190815 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:53:19.4837806-04:00 P3 run 2 quiet (waited=False)
+2026-10-11T19:54:51.3612981-04:00 P3 run 2 rps=2340.85 ok=187268 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:54:51.4273532-04:00 P3 run 3 quiet (waited=False)
+2026-10-11T19:56:23.7960816-04:00 P3 run 3 rps=2513.76 ok=201101 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:56:26.8161833-04:00 P3 stopped; pool timeout lines=0
+2026-10-11T19:56:26.9586534-04:00 P4 pre-layer quiet (waited=False)
+2026-10-11T19:56:45.9190649-04:00 P4 started pid=15960 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -XX:+UseCompactObjectHeaders -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_VIRTUAL_THREADS=false CHIRP_POOL_SIZE=48 CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T19:56:46.1256378-04:00 P4 vm: 15960: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T19:56:46.3638417-04:00 P4 compactHeaders=True
+2026-10-11T19:56:49.4800544-04:00 P4 db connections=48
+2026-10-11T19:56:49.6770109-04:00 P4 platform http-nio exec threads=10
+2026-10-11T19:56:49.7287701-04:00 P4 run 1 quiet (waited=False)
+2026-10-11T19:58:27.7288828-04:00 P4 run 1 rps=2417.29 ok=193383 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T19:58:27.8023796-04:00 P4 run 2 quiet (waited=False)
+2026-10-11T20:00:00.5858006-04:00 P4 run 2 rps=2769.64 ok=224341 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:00:00.6211587-04:00 P4 run 3 quiet (waited=False)
+2026-10-11T20:01:35.4289934-04:00 P4 run 3 rps=2271.04 ok=181683 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=True
+2026-10-11T20:01:38.5623660-04:00 P4 stopped; pool timeout lines=0
+2026-10-11T20:15:58.5983969-04:00 C0 pre-layer quiet (waited=True)
+2026-10-11T20:16:15.0471224-04:00 C0 started pid=22300 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_VIRTUAL_THREADS=false CHIRP_POOL_SIZE=48 CHIRP_CACHE_ENABLED=true CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T20:16:15.2580683-04:00 C0 vm: 22300: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T20:16:18.5548222-04:00 C0 db connections=48
+2026-10-11T20:16:18.7619427-04:00 C0 platform http-nio exec threads=10
+2026-10-11T20:16:18.8119813-04:00 C0 run 1 quiet (waited=False)
+2026-10-11T20:17:57.7947268-04:00 C0 run 1 rps=6404.24 ok=512339 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:17:57.8521795-04:00 C0 run 2 quiet (waited=False)
+2026-10-11T20:19:30.6249831-04:00 C0 run 2 rps=3774.07 ok=301926 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:19:30.6967125-04:00 C0 run 3 quiet (waited=False)
+2026-10-11T20:21:05.7860799-04:00 C0 run 3 rps=3594.14 ok=287531 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:21:08.8077007-04:00 C0 stopped; pool timeout lines=0
+2026-10-11T20:21:08.9020704-04:00 C1 pre-layer quiet (waited=False)
+2026-10-11T20:21:25.9890603-04:00 C1 started pid=18660 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -XX:+UseCompactObjectHeaders -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_VIRTUAL_THREADS=false CHIRP_POOL_SIZE=48 CHIRP_CACHE_ENABLED=true CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T20:21:26.1986748-04:00 C1 vm: 18660: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T20:21:26.4146094-04:00 C1 compactHeaders=True
+2026-10-11T20:21:29.5690009-04:00 C1 db connections=48
+2026-10-11T20:21:29.7831594-04:00 C1 platform http-nio exec threads=10
+2026-10-11T20:21:29.8632720-04:00 C1 run 1 quiet (waited=False)
+2026-10-11T20:23:08.8123710-04:00 C1 run 1 rps=4743.93 ok=379514 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:23:08.8783117-04:00 C1 run 2 quiet (waited=False)
+2026-10-11T20:24:42.8600118-04:00 C1 run 2 rps=3338.32 ok=267066 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:24:42.9073382-04:00 C1 run 3 quiet (waited=False)
+2026-10-11T20:26:15.3358745-04:00 C1 run 3 rps=4707.8 ok=376624 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:26:18.3448032-04:00 C1 stopped; pool timeout lines=0
+2026-10-11T20:26:18.4209093-04:00 C2 pre-layer quiet (waited=False)
+2026-10-11T20:26:33.9496224-04:00 C2 started pid=2692 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_VIRTUAL_THREADS=true CHIRP_POOL_SIZE=48 CHIRP_CACHE_ENABLED=true CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-11T20:26:34.1627268-04:00 C2 vm: 2692: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T20:26:37.4572326-04:00 C2 db connections=48
+2026-10-11T20:26:37.6554831-04:00 C2 platform http-nio exec threads=0
+2026-10-11T20:26:37.7135618-04:00 C2 run 1 quiet (waited=False)
+2026-10-11T20:28:17.4695442-04:00 C2 run 1 rps=3779.72 ok=306157 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:28:17.5213044-04:00 C2 run 2 quiet (waited=False)
+2026-10-11T20:29:49.2595211-04:00 C2 run 2 rps=5313.75 ok=425100 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:29:49.2954720-04:00 C2 run 3 quiet (waited=False)
+2026-10-11T20:31:23.4109257-04:00 C2 run 3 rps=3272.72 ok=261818 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:31:26.4365032-04:00 C2 stopped; pool timeout lines=0
+2026-10-11T20:31:26.4429818-04:00 batch done: G2b,G3,P0,P1,P2,P3,P4,C0,C1,C2
+2026-10-11T20:31:33.6697946-04:00 batch start: S0,S1 runs=3 hold=60
+2026-10-11T20:31:33.9295054-04:00 S0 pre-layer quiet (waited=False)
+2026-10-11T20:31:49.9858449-04:00 S0 started pid=572 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder2\naive.war --spring.profiles.active=loadtest vars=CHIRP_CONNECTION_TIMEOUT=30000 CHIRP_MIN_IDLE=10 CHIRP_POOL_SIZE=10
+2026-10-11T20:31:50.2333364-04:00 S0 vm: 572: | OpenJDK 64-Bit Server VM version 21.0.11+10-LTS | JDK 21.0.11
+2026-10-11T20:31:53.5872489-04:00 S0 db connections=10
+2026-10-11T20:31:53.8415924-04:00 S0 platform http-nio exec threads=10
+2026-10-11T20:31:53.9163302-04:00 S0 run 1 quiet (waited=False)
+2026-10-11T20:33:55.7393413-04:00 S0 run 1 rps=127.17 ok=10174 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:33:55.8027124-04:00 S0 run 2 quiet (waited=False)
+2026-10-11T20:35:47.8410627-04:00 S0 run 2 rps=133.97 ok=10718 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:35:47.8903460-04:00 S0 run 3 quiet (waited=False)
+2026-10-11T20:37:40.1670099-04:00 S0 run 3 rps=134.64 ok=10771 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:37:43.3448714-04:00 S0 stopped; pool timeout lines=0
+2026-10-11T20:37:43.4603596-04:00 S1 pre-layer quiet (waited=False)
+2026-10-11T20:37:58.8713090-04:00 S1 started pid=5788 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder2\naive.war --spring.profiles.active=loadtest vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T20:37:59.1067283-04:00 S1 vm: 5788: | OpenJDK 64-Bit Server VM version 21.0.11+10-LTS | JDK 21.0.11
+2026-10-11T20:38:02.4364990-04:00 S1 db connections=48
+2026-10-11T20:38:02.6568652-04:00 S1 platform http-nio exec threads=10
+2026-10-11T20:38:02.7036378-04:00 S1 run 1 quiet (waited=False)
+2026-10-11T20:39:55.1336541-04:00 S1 run 1 rps=221.25 ok=17921 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:39:55.2119156-04:00 S1 run 2 quiet (waited=False)
+2026-10-11T20:41:41.2690151-04:00 S1 run 2 rps=235.62 ok=18850 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:41:41.3322658-04:00 S1 run 3 quiet (waited=False)
+2026-10-11T20:43:27.7415211-04:00 S1 run 3 rps=236.85 ok=18948 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:43:30.7544598-04:00 S1 stopped; pool timeout lines=0
+2026-10-11T20:43:30.7549967-04:00 batch done: S0,S1
+2026-10-11T20:53:39.5348081-04:00 batch start: P1b,P2b,P1c,P2c runs=3 hold=60
+2026-10-11T20:53:39.7719204-04:00 P1b pre-layer quiet (waited=False)
+2026-10-11T20:53:54.9095212-04:00 P1b started pid=8844 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-dyn.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48 CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_VIRTUAL_THREADS=false
+2026-10-11T20:53:55.1597787-04:00 P1b vm: 8844: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T20:53:58.4811894-04:00 P1b db connections=48
+2026-10-11T20:53:58.6885869-04:00 P1b platform http-nio exec threads=10
+2026-10-11T20:53:58.7451126-04:00 P1b run 1 quiet (waited=False)
+2026-10-11T20:55:37.1892786-04:00 P1b run 1 rps=2860.47 ok=228838 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:55:37.2411378-04:00 P1b run 2 quiet (waited=False)
+2026-10-11T20:57:08.5287898-04:00 P1b run 2 rps=2858.93 ok=228714 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:57:08.5788211-04:00 P1b run 3 quiet (waited=False)
+2026-10-11T20:58:40.5448222-04:00 P1b run 3 rps=2483.01 ok=201124 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T20:58:43.6826479-04:00 P1b stopped; pool timeout lines=0
+2026-10-11T20:58:43.7799184-04:00 P2b pre-layer quiet (waited=False)
+2026-10-11T20:58:58.9312575-04:00 P2b started pid=6344 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48 CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_VIRTUAL_THREADS=false
+2026-10-11T20:58:59.1235923-04:00 P2b vm: 6344: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T20:59:02.4421928-04:00 P2b db connections=48
+2026-10-11T20:59:02.6396552-04:00 P2b platform http-nio exec threads=10
+2026-10-11T20:59:02.6967000-04:00 P2b run 1 quiet (waited=False)
+2026-10-11T21:00:40.2486488-04:00 P2b run 1 rps=2538.54 ok=205622 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T21:00:40.3169452-04:00 P2b run 2 quiet (waited=False)
+2026-10-11T21:02:11.3980898-04:00 P2b run 2 rps=2762.83 ok=223789 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T21:02:11.4626023-04:00 P2b run 3 quiet (waited=False)
+2026-10-11T21:03:43.2133408-04:00 P2b run 3 rps=2433.17 ok=197087 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T21:03:46.2401402-04:00 P2b stopped; pool timeout lines=0
+2026-10-11T21:03:46.3193477-04:00 P1c pre-layer quiet (waited=False)
+2026-10-11T21:04:01.8105522-04:00 P1c started pid=13316 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-dyn.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48 CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_VIRTUAL_THREADS=false
+2026-10-11T21:04:02.0108129-04:00 P1c vm: 13316: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T21:04:05.3117778-04:00 P1c db connections=48
+2026-10-11T21:04:05.5084541-04:00 P1c platform http-nio exec threads=10
+2026-10-11T21:04:05.5872360-04:00 P1c run 1 quiet (waited=False)
+2026-10-11T21:05:43.1166564-04:00 P1c run 1 rps=2516.57 ok=201326 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T21:05:43.1557995-04:00 P1c run 2 quiet (waited=False)
+2026-10-11T21:07:14.9652059-04:00 P1c run 2 rps=2379.78 ok=190382 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T21:07:15.0022497-04:00 P1c run 3 quiet (waited=False)
+2026-10-11T21:08:47.3536530-04:00 P1c run 3 rps=2423.11 ok=193849 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T21:08:50.3794653-04:00 P1c stopped; pool timeout lines=0
+2026-10-11T21:08:50.5187656-04:00 P2c pre-layer quiet (waited=False)
+2026-10-11T21:09:05.8351575-04:00 P2c started pid=27500 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48 CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_VIRTUAL_THREADS=false
+2026-10-11T21:09:06.0355078-04:00 P2c vm: 27500: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T21:09:09.3327055-04:00 P2c db connections=48
+2026-10-11T21:09:09.5359342-04:00 P2c platform http-nio exec threads=10
+2026-10-11T21:09:09.5936921-04:00 P2c run 1 quiet (waited=False)
+2026-10-11T21:10:47.3302510-04:00 P2c run 1 rps=2478.76 ok=198301 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T21:10:47.3982290-04:00 P2c run 2 quiet (waited=False)
+2026-10-11T21:12:19.8040183-04:00 P2c run 2 rps=2347.65 ok=187812 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T21:12:19.8665058-04:00 P2c run 3 quiet (waited=False)
+2026-10-11T21:13:52.7891857-04:00 P2c run 3 rps=2493.31 ok=199465 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T21:13:55.8169419-04:00 P2c stopped; pool timeout lines=0
+2026-10-11T21:13:55.8248081-04:00 batch done: P1b,P2b,P1c,P2c
+2026-10-12T01:32:16.1558560-04:00 batch start: F0,F1,F2,F3,F4,F0b runs=3 hold=180
+2026-10-12T01:32:16.4188912-04:00 F0 pre-layer quiet (waited=False)
+2026-10-12T01:32:36.0032514-04:00 F0 started pid=26796 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-dyn.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=true CHIRP_POOL_SIZE=48 CHIRP_VIRTUAL_THREADS=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T01:32:36.2784336-04:00 F0 vm: 26796: | OpenJDK 64-Bit Server VM version 21.0.11+10-LTS | JDK 21.0.11
+2026-10-12T01:32:39.6267078-04:00 F0 db connections=48
+2026-10-12T01:32:39.8616500-04:00 F0 platform http-nio exec threads=10
+2026-10-12T01:32:39.9155781-04:00 F0 run 1 quiet (waited=False)
+2026-10-12T01:36:35.7919669-04:00 F0 run 1 rps=4224.35 ok=849095 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.59 gatlingCores=2 postgresCores=0.59 samples=18
+2026-10-12T01:36:35.8429050-04:00 F0 run 2 quiet (waited=False)
+2026-10-12T01:40:14.0038765-04:00 F0 run 2 rps=3956.81 ok=795318 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.36 gatlingCores=2 postgresCores=0.47 samples=11
+2026-10-12T01:40:14.0732379-04:00 F0 run 3 quiet (waited=False)
+2026-10-12T01:43:52.8102386-04:00 F0 run 3 rps=3868.56 ok=777580 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.44 gatlingCores=2 postgresCores=0.49 samples=16
+2026-10-12T01:43:55.9371713-04:00 F0 stopped; pool timeout lines=0
+2026-10-12T01:43:56.0763449-04:00 F1 pre-layer quiet (waited=False)
+2026-10-12T01:44:12.3485851-04:00 F1 started pid=20872 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-dyn.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=true CHIRP_POOL_SIZE=48 CHIRP_VIRTUAL_THREADS=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T01:44:12.5576913-04:00 F1 vm: 20872: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-12T01:44:15.8802594-04:00 F1 db connections=48
+2026-10-12T01:44:16.0972856-04:00 F1 platform http-nio exec threads=10
+2026-10-12T01:44:16.1526411-04:00 F1 run 1 quiet (waited=False)
+2026-10-12T01:47:58.0686523-04:00 F1 run 1 rps=4660.63 ok=936787 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.1 gatlingCores=2 postgresCores=0.51 samples=13
+2026-10-12T01:47:58.1257944-04:00 F1 run 2 quiet (waited=False)
+2026-10-12T01:51:34.5713689-04:00 F1 run 2 rps=3375.97 ok=678569 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.03 gatlingCores=2 postgresCores=0.54 samples=13
+2026-10-12T01:51:34.6210046-04:00 F1 run 3 quiet (waited=False)
+2026-10-12T01:55:09.0822400-04:00 F1 run 3 rps=4234.2 ok=851074 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.05 gatlingCores=2 postgresCores=0.51 samples=14
+2026-10-12T01:55:12.1040033-04:00 F1 stopped; pool timeout lines=0
+2026-10-12T01:55:12.1925877-04:00 F2 pre-layer quiet (waited=False)
+2026-10-12T01:55:27.2841729-04:00 F2 started pid=13380 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=true CHIRP_POOL_SIZE=48 CHIRP_VIRTUAL_THREADS=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T01:55:27.5086160-04:00 F2 vm: 13380: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-12T01:55:30.7893244-04:00 F2 db connections=48
+2026-10-12T01:55:30.9874778-04:00 F2 platform http-nio exec threads=10
+2026-10-12T01:55:31.0609402-04:00 F2 run 1 quiet (waited=False)
+2026-10-12T01:59:12.0551963-04:00 F2 run 1 rps=4276.95 ok=859667 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.5 gatlingCores=2 postgresCores=0.44 samples=17
+2026-10-12T01:59:12.1065073-04:00 F2 run 2 quiet (waited=False)
+2026-10-12T02:02:49.6385965-04:00 F2 run 2 rps=4141.24 ok=832389 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.59 gatlingCores=2 postgresCores=0.44 samples=9
+2026-10-12T02:02:49.7147045-04:00 F2 run 3 quiet (waited=False)
+2026-10-12T02:06:28.9042530-04:00 F2 run 3 rps=4178.7 ok=835740 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.53 gatlingCores=2 postgresCores=0.44 samples=15
+2026-10-12T02:06:31.9165895-04:00 F2 stopped; pool timeout lines=0
+2026-10-12T02:06:32.0338932-04:00 F3 pre-layer quiet (waited=False)
+2026-10-12T02:06:47.2044621-04:00 F3 started pid=27236 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=true CHIRP_POOL_SIZE=48 CHIRP_VIRTUAL_THREADS=true CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T02:06:47.4114061-04:00 F3 vm: 27236: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-12T02:06:50.7401010-04:00 F3 db connections=48
+2026-10-12T02:06:50.9741588-04:00 F3 platform http-nio exec threads=0
+2026-10-12T02:06:51.0623743-04:00 F3 run 1 quiet (waited=False)
+2026-10-12T02:10:30.3396572-04:00 F3 run 1 rps=3655.1 ok=734676 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.69 gatlingCores=1 postgresCores=0.49 samples=17
+2026-10-12T02:10:30.3822153-04:00 F3 run 2 quiet (waited=False)
+2026-10-12T02:14:05.0781650-04:00 F3 run 2 rps=4295.56 ok=859111 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.91 gatlingCores=2 postgresCores=0.5 samples=14
+2026-10-12T02:14:05.1255226-04:00 F3 run 3 quiet (waited=False)
+2026-10-12T02:17:39.4865677-04:00 F3 run 3 rps=4025.37 ok=809099 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.7 gatlingCores=1 postgresCores=0.45 samples=17
+2026-10-12T02:17:42.5020411-04:00 F3 stopped; pool timeout lines=0
+2026-10-12T02:17:42.6182030-04:00 F4 pre-layer quiet (waited=False)
+2026-10-12T02:17:57.8037755-04:00 F4 started pid=27408 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -XX:+UseCompactObjectHeaders -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=true CHIRP_POOL_SIZE=48 CHIRP_VIRTUAL_THREADS=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T02:17:58.0114878-04:00 F4 vm: 27408: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-12T02:17:58.2037828-04:00 F4 compactHeaders=True
+2026-10-12T02:18:01.3136192-04:00 F4 db connections=48
+2026-10-12T02:18:01.5135106-04:00 F4 platform http-nio exec threads=10
+2026-10-12T02:18:01.5613953-04:00 F4 run 1 quiet (waited=False)
+2026-10-12T02:21:42.8687842-04:00 F4 run 1 rps=4513.14 ok=907142 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.74 gatlingCores=2 postgresCores=0.49 samples=15
+2026-10-12T02:21:42.9066251-04:00 F4 run 2 quiet (waited=False)
+2026-10-12T02:25:20.9404316-04:00 F4 run 2 rps=3737.34 ok=751205 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.42 gatlingCores=2 postgresCores=0.48 samples=11
+2026-10-12T02:25:21.0303840-04:00 F4 run 3 quiet (waited=False)
+2026-10-12T02:28:57.1196322-04:00 F4 run 3 rps=3500.18 ok=703536 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.44 gatlingCores=2 postgresCores=0.48 samples=11
+2026-10-12T02:29:00.1468508-04:00 F4 stopped; pool timeout lines=0
+2026-10-12T02:29:00.2751377-04:00 F0b pre-layer quiet (waited=False)
+2026-10-12T02:29:20.0710982-04:00 F0b started pid=26308 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-dyn.war --spring.profiles.active=loadtest vars=CHIRP_CACHE_ENABLED=true CHIRP_POOL_SIZE=48 CHIRP_VIRTUAL_THREADS=false CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T02:29:20.3270615-04:00 F0b vm: 26308: | OpenJDK 64-Bit Server VM version 21.0.11+10-LTS | JDK 21.0.11
+2026-10-12T02:29:23.6937407-04:00 F0b db connections=48
+2026-10-12T02:29:23.9432697-04:00 F0b platform http-nio exec threads=10
+2026-10-12T02:29:24.0211080-04:00 F0b run 1 quiet (waited=False)
+2026-10-12T02:33:07.4869900-04:00 F0b run 1 rps=3959.56 ok=795871 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.66 gatlingCores=2 postgresCores=0.56 samples=19
+2026-10-12T02:33:07.5488415-04:00 F0b run 2 quiet (waited=False)
+2026-10-12T02:36:44.2822575-04:00 F0b run 2 rps=4132.49 ok=830630 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.47 gatlingCores=2 postgresCores=0.43 samples=29
+2026-10-12T02:36:44.3487339-04:00 F0b run 3 quiet (waited=False)
+2026-10-12T02:40:20.9462911-04:00 F0b run 3 rps=4287.58 ok=857516 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.58 gatlingCores=2 postgresCores=0.5 samples=18
+2026-10-12T02:40:23.9708419-04:00 F0b stopped; pool timeout lines=0
+2026-10-12T02:40:23.9818642-04:00 batch done: F0,F1,F2,F3,F4,F0b
+2026-10-12T02:40:32.5949305-04:00 queueH: F series done, building dynamic GORM war
+2026-10-12T02:40:53.2071270-04:00 queueH: build exit=0
+2026-10-12T02:40:53.6561732-04:00 batch start: H0,H1,H2,H3,H4 runs=3 hold=60
+2026-10-12T02:40:53.8587351-04:00 H0 pre-layer quiet (waited=False)
+2026-10-12T02:41:08.7488195-04:00 H0 started pid=9032 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -Dchirp.gorm.entityBatchSize=50 -Dchirp.gorm.groupedCounts=true -jar <home>\AppData\Local\Temp\opencode\ladder3\dyn-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 vars=CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T02:41:08.9967598-04:00 H0 vm: 9032: | OpenJDK 64-Bit Server VM version 21.0.11+10-LTS | JDK 21.0.11
+2026-10-12T02:41:12.3057331-04:00 H0 db connections=48
+2026-10-12T02:41:12.5329270-04:00 H0 platform http-nio exec threads=10
+2026-10-12T02:41:12.5959886-04:00 H0 run 1 quiet (waited=False)
+2026-10-12T02:42:53.9659847-04:00 H0 run 1 rps=1249.38 ok=101200 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.68 gatlingCores=1 postgresCores=6.25 samples=14
+2026-10-12T02:42:54.0081849-04:00 H0 run 2 quiet (waited=False)
+2026-10-12T02:44:27.2012610-04:00 H0 run 2 rps=1417.72 ok=114835 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.76 gatlingCores=1 postgresCores=6.49 samples=13
+2026-10-12T02:44:27.2715036-04:00 H0 run 3 quiet (waited=False)
+2026-10-12T02:46:01.0538351-04:00 H0 run 3 rps=1300.77 ok=105362 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.51 gatlingCores=1 postgresCores=6.93 samples=13
+2026-10-12T02:46:04.1361791-04:00 H0 stopped; pool timeout lines=0
+2026-10-12T02:46:04.2257345-04:00 H1 pre-layer quiet (waited=False)
+2026-10-12T02:46:19.0847660-04:00 H1 started pid=25404 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -Dchirp.gorm.entityBatchSize=50 -Dchirp.gorm.groupedCounts=true -jar <home>\AppData\Local\Temp\opencode\ladder3\dyn-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 vars=CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T02:46:19.2940236-04:00 H1 vm: 25404: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-12T02:46:22.5999688-04:00 H1 db connections=48
+2026-10-12T02:46:22.7965973-04:00 H1 platform http-nio exec threads=10
+2026-10-12T02:46:22.8565846-04:00 H1 run 1 quiet (waited=False)
+2026-10-12T02:48:02.9646759-04:00 H1 run 1 rps=1247.33 ok=101034 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.59 gatlingCores=1 postgresCores=5.95 samples=11
+2026-10-12T02:48:03.0410631-04:00 H1 run 2 quiet (waited=False)
+2026-10-12T02:49:37.3623598-04:00 H1 run 2 rps=1331.2 ok=107827 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.41 gatlingCores=1 postgresCores=5.91 samples=11
+2026-10-12T02:49:37.4022761-04:00 H1 run 3 quiet (waited=False)
+2026-10-12T02:51:11.9562919-04:00 H1 run 3 rps=1323.86 ok=107233 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.39 gatlingCores=1 postgresCores=6.32 samples=11
+2026-10-12T02:51:14.9718498-04:00 H1 stopped; pool timeout lines=0
+2026-10-12T02:51:15.0771531-04:00 H2 pre-layer quiet (waited=False)
+2026-10-12T02:51:30.0028974-04:00 H2 started pid=19008 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -Dchirp.gorm.entityBatchSize=50 -Dchirp.gorm.groupedCounts=true -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 vars=CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T02:51:30.1985343-04:00 H2 vm: 19008: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-12T02:51:33.5053984-04:00 H2 db connections=48
+2026-10-12T02:51:33.7182622-04:00 H2 platform http-nio exec threads=10
+2026-10-12T02:51:33.7787428-04:00 H2 run 1 quiet (waited=False)
+2026-10-12T02:53:13.8690527-04:00 H2 run 1 rps=1278.37 ok=103548 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.46 gatlingCores=1 postgresCores=5.94 samples=11
+2026-10-12T02:53:13.9144274-04:00 H2 run 2 quiet (waited=False)
+2026-10-12T02:54:47.5203265-04:00 H2 run 2 rps=1378.79 ok=111682 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.25 gatlingCores=1 postgresCores=5.78 samples=11
+2026-10-12T02:54:47.5618077-04:00 H2 run 3 quiet (waited=False)
+2026-10-12T02:56:21.4758782-04:00 H2 run 3 rps=1352.67 ok=109566 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.28 gatlingCores=1 postgresCores=6.07 samples=11
+2026-10-12T02:56:24.4976575-04:00 H2 stopped; pool timeout lines=0
+2026-10-12T02:56:24.6341181-04:00 H3 pre-layer quiet (waited=False)
+2026-10-12T02:56:39.5044809-04:00 H3 started pid=12432 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -Dchirp.gorm.entityBatchSize=50 -Dchirp.gorm.groupedCounts=true -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 --spring.threads.virtual.enabled=true vars=CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T02:56:39.7177806-04:00 H3 vm: 12432: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-12T02:56:43.0395578-04:00 H3 db connections=48
+2026-10-12T02:56:43.2440783-04:00 H3 platform http-nio exec threads=0
+2026-10-12T02:56:43.3162983-04:00 H3 run 1 quiet (waited=False)
+2026-10-12T02:58:23.7455660-04:00 H3 run 1 rps=1082.16 ok=86573 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.24 gatlingCores=0 postgresCores=3.38 samples=13
+2026-10-12T02:58:23.7959036-04:00 H3 run 2 quiet (waited=False)
+2026-10-12T02:59:57.9862901-04:00 H3 run 2 rps=1138.72 ok=91098 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.97 gatlingCores=0 postgresCores=3.35 samples=10
+2026-10-12T02:59:58.0511799-04:00 H3 run 3 quiet (waited=False)
+2026-10-12T03:01:32.7804332-04:00 H3 run 3 rps=1148.35 ok=93016 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.09 gatlingCores=0 postgresCores=3.18 samples=12
+2026-10-12T03:01:35.8114647-04:00 H3 stopped; pool timeout lines=0
+2026-10-12T03:01:35.9772196-04:00 H4 pre-layer quiet (waited=False)
+2026-10-12T03:01:50.9075332-04:00 H4 started pid=19712 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -XX:+UseCompactObjectHeaders -Dchirp.gorm.entityBatchSize=50 -Dchirp.gorm.groupedCounts=true -jar <home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war --spring.profiles.active=loadtest --hibernate.default_batch_fetch_size=50 vars=CHIRP_POOL_SIZE=48 CHIRP_MIN_IDLE=48 CHIRP_CONNECTION_TIMEOUT=2000
+2026-10-12T03:01:51.1205298-04:00 H4 vm: 19712: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-12T03:01:51.3057916-04:00 H4 compactHeaders=True
+2026-10-12T03:01:54.4288713-04:00 H4 db connections=48
+2026-10-12T03:01:54.6321543-04:00 H4 platform http-nio exec threads=10
+2026-10-12T03:01:54.6992833-04:00 H4 run 1 quiet (waited=False)
+2026-10-12T03:03:35.4632173-04:00 H4 run 1 rps=1301.09 ok=105388 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.34 gatlingCores=1 postgresCores=5.34 samples=9
+2026-10-12T03:03:35.5340080-04:00 H4 run 2 quiet (waited=False)
+2026-10-12T03:05:09.6128450-04:00 H4 run 2 rps=1340.2 ok=108556 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.43 gatlingCores=1 postgresCores=5.58 samples=9
+2026-10-12T03:05:09.6529097-04:00 H4 run 3 quiet (waited=False)
+2026-10-12T03:06:43.9866557-04:00 H4 run 3 rps=1353.43 ok=109628 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=6.36 gatlingCores=1 postgresCores=5.3 samples=9
+2026-10-12T03:06:47.0122655-04:00 H4 stopped; pool timeout lines=0
+2026-10-12T03:06:47.0208329-04:00 batch done: H0,H1,H2,H3,H4
+2026-10-12T03:06:52.4681921-04:00 batch start: F4b runs=3 hold=180
+2026-10-12T03:06:52.7281387-04:00 F4b pre-layer quiet (waited=False)
+2026-10-12T03:07:08.2657862-04:00 F4b started pid=3256 ready=True args=-Dgrails.env=loadtest -Xms1g -Xmx1g -XX:+UseG1GC -XX:ActiveProcessorCount=12 -XX:+UseCompactObjectHeaders -jar <home>\AppData\Local\Temp\opencode\ladder3\optimized-j21-static.war --spring.profiles.active=loadtest vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_POOL_SIZE=48 CHIRP_VIRTUAL_THREADS=false CHIRP_MIN_IDLE=48 CHIRP_CACHE_ENABLED=true
+2026-10-12T03:07:08.4596231-04:00 F4b vm: 3256: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-12T03:07:08.6559514-04:00 F4b compactHeaders=True
+2026-10-12T03:07:11.7654074-04:00 F4b db connections=48
+2026-10-12T03:07:11.9743135-04:00 F4b platform http-nio exec threads=10
+2026-10-12T03:07:12.0365156-04:00 F4b run 1 quiet (waited=False)
+2026-10-12T03:10:52.3864797-04:00 F4b run 1 rps=4010.75 ok=806161 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.82 gatlingCores=2 postgresCores=0.54 samples=14
+2026-10-12T03:10:52.4626020-04:00 F4b run 2 quiet (waited=False)
+2026-10-12T03:14:27.1782579-04:00 F4b run 2 rps=4140.23 ok=832186 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.71 gatlingCores=2 postgresCores=0.56 samples=11
+2026-10-12T03:14:27.2709801-04:00 F4b run 3 quiet (waited=False)
+2026-10-12T03:18:04.8738138-04:00 F4b run 3 rps=4167.27 ok=837622 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False appCores=5.58 gatlingCores=2 postgresCores=0.51 samples=20
+2026-10-12T03:18:08.0390015-04:00 F4b stopped; pool timeout lines=0
+2026-10-12T03:18:08.0504454-04:00 batch done: F4b

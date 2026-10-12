@@ -1,0 +1,16 @@
+{
+  "config": "GBefore",
+  "javaPid": 23352,
+  "timeline": {
+    "beforeLineCount": 181,
+    "afterLineCount": 297,
+    "statements": 116,
+    "sha256": "A96A1BDF2DE8443D8CB27C24BF127434A1C61EF96BF75A13E87A1FC7381A67AF"
+  },
+  "account": {
+    "beforeLineCount": 352,
+    "afterLineCount": 407,
+    "statements": 55,
+    "sha256": "3599AADAA369F8CE37F901A17D752CE6751A07C5184B744E134E336DD57F674E"
+  }
+}

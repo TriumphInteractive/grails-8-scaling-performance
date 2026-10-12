@@ -1,0 +1,103 @@
+2026-10-11T16:42:45.7296051-04:00 ladder start
+2026-10-11T16:42:45.8016169-04:00 seed copied exit=0
+2026-10-11T16:42:45.9309029-04:00 L0 pre-layer quiet (waited=False)
+2026-10-11T16:43:01.1087943-04:00 L0 started pid=4788 ready=True war=<home>\AppData\Local\Temp\opencode\ladder2\naive.war jdk=C:\Program Files\Amazon Corretto\jdk21.0.11_10\bin extra= vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T16:43:01.3242848-04:00 L0 vm: 4788: | OpenJDK 64-Bit Server VM version 21.0.11+10-LTS | JDK 21.0.11
+2026-10-11T16:43:04.4418677-04:00 L0 db connections=48
+2026-10-11T16:43:04.5015757-04:00 L0 run 1 quiet (waited=False)
+2026-10-11T16:44:58.9494019-04:00 L0 run 1 rps=232.74 ok=18619 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T16:44:59.0184300-04:00 L0 run 2 quiet (waited=False)
+2026-10-11T16:46:47.0463821-04:00 L0 run 2 rps=227.22 ok=18178 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T16:46:47.1149759-04:00 L0 run 3 quiet (waited=False)
+2026-10-11T16:48:33.8366709-04:00 L0 run 3 rps=224.89 ok=17991 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T16:48:37.0893442-04:00 L0 stopped; pool timeout lines=0
+2026-10-11T16:48:37.1614585-04:00 L1 pre-layer quiet (waited=False)
+2026-10-11T16:48:54.2528286-04:00 L1 started pid=26556 ready=True war=<home>\AppData\Local\Temp\opencode\ladder2\naive.war jdk=<home>\.gradle\jdks\amazon_com_inc_-25-amd64-windows.2\bin extra= vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T16:48:54.4778966-04:00 L1 vm: 26556: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T16:48:57.6120648-04:00 L1 db connections=48
+2026-10-11T16:48:57.6834643-04:00 L1 run 1 quiet (waited=False)
+2026-10-11T16:50:50.6533926-04:00 L1 run 1 rps=219.9 ok=17592 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T16:50:50.7358622-04:00 L1 run 2 quiet (waited=False)
+2026-10-11T16:52:39.0988799-04:00 L1 run 2 rps=225.21 ok=18017 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T16:52:39.1700321-04:00 L1 run 3 quiet (waited=False)
+2026-10-11T16:54:26.8303812-04:00 L1 run 3 rps=226.93 ok=18154 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T16:54:29.8528714-04:00 L1 stopped; pool timeout lines=0
+2026-10-11T16:54:29.9356065-04:00 L1i pre-layer quiet (waited=False)
+2026-10-11T16:54:48.9865465-04:00 L1i started pid=19684 ready=True war=<home>\AppData\Local\Temp\opencode\ladder2\naive-indy.war jdk=<home>\.gradle\jdks\amazon_com_inc_-25-amd64-windows.2\bin extra= vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T16:54:49.2124824-04:00 L1i vm: 19684: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T16:54:52.3791909-04:00 L1i db connections=48
+2026-10-11T16:54:52.4516803-04:00 L1i run 1 quiet (waited=False)
+2026-10-11T16:56:46.4501376-04:00 L1i run 1 rps=216.76 ok=17341 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T16:56:46.5324419-04:00 L1i run 2 quiet (waited=False)
+2026-10-11T16:58:34.3483610-04:00 L1i run 2 rps=227.41 ok=18193 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T16:58:34.4139450-04:00 L1i run 3 quiet (waited=False)
+2026-10-11T17:00:21.8356699-04:00 L1i run 3 rps=219.04 ok=17523 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:00:24.8647388-04:00 L1i stopped; pool timeout lines=0
+2026-10-11T17:00:24.9487398-04:00 L2 pre-layer quiet (waited=False)
+2026-10-11T17:00:44.1260118-04:00 L2 started pid=13084 ready=True war=<home>\AppData\Local\Temp\opencode\ladder2\static.war jdk=<home>\.gradle\jdks\amazon_com_inc_-25-amd64-windows.2\bin extra= vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T17:00:44.3374160-04:00 L2 vm: 13084: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T17:00:47.4922157-04:00 L2 db connections=48
+2026-10-11T17:00:47.5809426-04:00 L2 run 1 quiet (waited=False)
+2026-10-11T17:02:41.3303346-04:00 L2 run 1 rps=217.25 ok=17380 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:02:41.4008581-04:00 L2 run 2 quiet (waited=False)
+2026-10-11T17:04:29.2914195-04:00 L2 run 2 rps=224.1 ok=17928 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:04:29.3669371-04:00 L2 run 3 quiet (waited=False)
+2026-10-11T17:06:16.7114344-04:00 L2 run 3 rps=222.6 ok=17808 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:06:19.7381772-04:00 L2 stopped; pool timeout lines=0
+2026-10-11T17:06:19.7881539-04:00 L3 pre-layer quiet (waited=False)
+2026-10-11T17:06:35.8802920-04:00 L3 started pid=2080 ready=True war=<home>\AppData\Local\Temp\opencode\ladder2\static.war jdk=<home>\.gradle\jdks\amazon_com_inc_-25-amd64-windows.2\bin extra=--spring.threads.virtual.enabled=true vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T17:06:36.1287679-04:00 L3 vm: 2080: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T17:06:39.2742135-04:00 L3 db connections=48
+2026-10-11T17:06:39.5060508-04:00 L3 platform http-nio exec threads=0
+2026-10-11T17:06:39.6019393-04:00 L3 run 1 quiet (waited=False)
+2026-10-11T17:08:41.3329921-04:00 L3 run 1 rps=124.7 ok=9976 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:08:41.4362130-04:00 L3 run 2 quiet (waited=False)
+2026-10-11T17:10:33.4419252-04:00 L3 run 2 rps=161.79 ok=12943 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:10:33.5024464-04:00 L3 run 3 quiet (waited=False)
+2026-10-11T17:12:24.3943180-04:00 L3 run 3 rps=152.34 ok=12187 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:12:27.4258933-04:00 L3 stopped; pool timeout lines=0
+2026-10-11T17:12:27.5162155-04:00 L4 pre-layer quiet (waited=False)
+2026-10-11T17:12:47.1725966-04:00 L4 started pid=20552 ready=True war=<home>\AppData\Local\Temp\opencode\ladder2\optimized.war jdk=<home>\.gradle\jdks\amazon_com_inc_-25-amd64-windows.2\bin extra= vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_VIRTUAL_THREADS=true CHIRP_CACHE_ENABLED=false CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T17:12:47.3961616-04:00 L4 vm: 20552: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T17:12:50.5497275-04:00 L4 db connections=48
+2026-10-11T17:12:50.6227882-04:00 L4 run 1 quiet (waited=False)
+2026-10-11T17:14:30.3144696-04:00 L4 run 1 rps=2100.88 ok=168070 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:14:30.3765855-04:00 L4 run 2 quiet (waited=False)
+2026-10-11T17:16:03.2004690-04:00 L4 run 2 rps=2270.8 ok=181664 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:16:03.2770399-04:00 L4 run 3 quiet (waited=False)
+2026-10-11T17:17:37.3303732-04:00 L4 run 3 rps=2176.62 ok=174130 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:17:40.3749408-04:00 L4 stopped; pool timeout lines=0
+2026-10-11T17:17:40.4932830-04:00 L5 pre-layer quiet (waited=False)
+2026-10-11T17:18:16.2872821-04:00 L5 started pid=19528 ready=True war=<home>\AppData\Local\Temp\opencode\ladder2\optimized.war jdk=<home>\.gradle\jdks\amazon_com_inc_-25-amd64-windows.2\bin extra= vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_VIRTUAL_THREADS=true CHIRP_CACHE_ENABLED=true CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T17:18:16.6027826-04:00 L5 vm: 19528: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T17:18:19.8074853-04:00 L5 db connections=48
+2026-10-11T17:18:19.9703840-04:00 L5 run 1 quiet (waited=False)
+2026-10-11T17:20:01.2051801-04:00 L5 run 1 rps=4326.46 ok=346117 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:20:01.2847732-04:00 L5 run 2 quiet (waited=False)
+2026-10-11T17:21:33.8269834-04:00 L5 run 2 rps=4924.95 ok=393996 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:21:33.9026958-04:00 L5 run 3 quiet (waited=False)
+2026-10-11T17:23:09.2396805-04:00 L5 run 3 rps=3188.2 ok=255056 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:23:12.2634054-04:00 L5 stopped; pool timeout lines=0
+2026-10-11T17:23:12.3311349-04:00 L1r pre-layer quiet (waited=False)
+2026-10-11T17:23:28.7331310-04:00 L1r started pid=8840 ready=True war=<home>\AppData\Local\Temp\opencode\ladder2\naive.war jdk=<home>\.gradle\jdks\amazon_com_inc_-25-amd64-windows.2\bin extra= vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T17:23:28.9436204-04:00 L1r vm: 8840: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T17:23:32.0782996-04:00 L1r db connections=48
+2026-10-11T17:23:32.1375184-04:00 L1r run 1 quiet (waited=False)
+2026-10-11T17:25:31.3952628-04:00 L1r run 1 rps=210.28 ok=16822 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:25:31.4536608-04:00 L1r run 2 quiet (waited=False)
+2026-10-11T17:27:18.8332223-04:00 L1r run 2 rps=220.72 ok=17658 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:27:18.9361689-04:00 L1r run 3 quiet (waited=False)
+2026-10-11T17:29:09.1259752-04:00 L1r run 3 rps=211.29 ok=16903 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:29:12.1491085-04:00 L1r stopped; pool timeout lines=0
+2026-10-11T17:29:12.2258478-04:00 L2r pre-layer quiet (waited=False)
+2026-10-11T17:29:32.5379372-04:00 L2r started pid=18276 ready=True war=<home>\AppData\Local\Temp\opencode\ladder2\static.war jdk=<home>\.gradle\jdks\amazon_com_inc_-25-amd64-windows.2\bin extra= vars=CHIRP_CONNECTION_TIMEOUT=2000 CHIRP_MIN_IDLE=48 CHIRP_POOL_SIZE=48
+2026-10-11T17:29:32.7669233-04:00 L2r vm: 18276: | OpenJDK 64-Bit Server VM version 25.0.4.1+10-LTS | JDK 25.0.4.1
+2026-10-11T17:29:35.9518539-04:00 L2r db connections=48
+2026-10-11T17:29:36.0186896-04:00 L2r run 1 quiet (waited=False)
+2026-10-11T17:31:32.8610528-04:00 L2r run 1 rps=207.44 ok=16595 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:31:32.9344800-04:00 L2r run 2 quiet (waited=False)
+2026-10-11T17:33:22.7870965-04:00 L2r run 2 rps=209.28 ok=16742 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:33:22.8866433-04:00 L2r run 3 quiet (waited=False)
+2026-10-11T17:35:11.8333410-04:00 L2r run 3 rps=199.94 ok=15995 ko=0 seed=0 analyze=0 warm=0 load=0 flakyAtEnd=False
+2026-10-11T17:35:14.8871544-04:00 L2r stopped; pool timeout lines=0
+2026-10-11T17:35:14.8941532-04:00 ladder done

@@ -1,0 +1,407 @@
+
+>                                                                            <
+>                            ____           _ _                              <
+>                           / ___|_ __ __ _(_) |___                          <
+>                          | |  _| '__/ _` | | / __|                         <
+>                          | |_| | | | (_| | | \__ \                         <
+>                           \____|_|  \__,_|_|_|___/                         <
+>                          https://grails.apache.org                         <
+>                                                                            <
+        baseline: 0.1 | JVM: Amazon.com Inc. 25.0.4.1 | Grails: 8.0.0         
+    Groovy: 5.1.3 | Spring Boot: 4.1.1 | Spring: 7.0.9 | Tomcat: 11.0.24.0    
+
+2026-10-11T17:39:19.524-04:00  INFO 17704 --- [           main] demo.chirp.Application                   : Starting Application v0.1 using Java 25.0.4.1 with PID 17704 (<home>\AppData\Local\Temp\opencode\ladder3\static-gorm.war started by <user> in <home>\Documents\IdeaProjects\grails-8-scaling-performance\baseline)
+2026-10-11T17:39:19.526-04:00  INFO 17704 --- [           main] demo.chirp.Application                   : The following 1 profile is active: "loadtest"
+2026-10-11T17:39:19.686-04:00  INFO 17704 --- [           main] g.plugins.DefaultGrailsPluginManager     : Loaded 21 Grails plugins in load order: [dataBinding (8.0.0), sitemesh3 (8.0.0), databaseMigration (8.0.0), restResponder (8.0.0), i18n (8.0.0), core (8.0.0), eventBus (8.0.0), groovyPages (8.0.0), urlMappings (8.0.0), controllers (8.0.0), codecs (8.0.0), mimeTypes (8.0.0), dataSource (8.0.0), assetPipeline (5.2.0), scaffolding (8.0.0), domainClass (8.0.0), converters (8.0.0), fields (8.0.0), hibernate (8.0.0), interceptors (8.0.0), services (8.0.0)]
+2026-10-11T17:39:23.736-04:00  INFO 17704 --- [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.10.Final
+2026-10-11T17:39:24.259-04:00  INFO 17704 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-11T17:39:24.464-04:00  INFO 17704 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@240fa4ad
+2026-10-11T17:39:24.467-04:00  INFO 17704 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-11T17:39:24.538-04:00  INFO 17704 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5438/chirp_baseline]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.15
+	Default catalog/schema: chirp_baseline/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-11T17:39:26.939-04:00  INFO 17704 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-10-11T17:39:26.956-04:00  INFO 17704 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-11T17:39:26.956-04:00  INFO 17704 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-11T17:39:27.075-04:00  INFO 17704 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 7505 ms
+2026-10-11T17:39:32.368-04:00  WARN 17704 --- [           main] grails.events.bus.EventBusBuilder        : No event bus implementations found on classpath, using synchronous implementation.
+2026-10-11T17:39:33.575-04:00  INFO 17704 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-11T17:39:33.793-04:00  INFO 17704 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring GrailsDispatcherServlet 'dispatcherServletRegistration'
+2026-10-11T17:39:33.793-04:00  INFO 17704 --- [           main] o.g.w.s.mvc.GrailsDispatcherServlet      : Initializing Servlet 'dispatcherServletRegistration'
+2026-10-11T17:39:33.796-04:00  INFO 17704 --- [           main] o.g.w.s.mvc.GrailsDispatcherServlet      : Completed initialization in 3 ms
+2026-10-11T17:39:33.797-04:00  INFO 17704 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-10-11T17:39:34.416-04:00  INFO 17704 --- [           main] liquibase.database                       : Set default schema name to public
+2026-10-11T17:39:35.555-04:00  INFO 17704 --- [           main] liquibase.changelog                      : Reading from public.databasechangelog
+2026-10-11T17:39:35.644-04:00  INFO 17704 --- [           main] liquibase.ui                             : Database is up to date, no changesets to execute
+2026-10-11T17:39:35.648-04:00  INFO 17704 --- [           main] liquibase.changelog                      : Reading from public.databasechangelog
+
+UPDATE SUMMARY
+Run:                          0
+Previously run:               2
+Filtered out:                 0
+-------------------------------
+Total change sets:            2
+
+2026-10-11T17:39:35.662-04:00  INFO 17704 --- [           main] liquibase.util                           : UPDATE SUMMARY
+2026-10-11T17:39:35.662-04:00  INFO 17704 --- [           main] liquibase.util                           : Run:                          0
+2026-10-11T17:39:35.662-04:00  INFO 17704 --- [           main] liquibase.util                           : Previously run:               2
+2026-10-11T17:39:35.662-04:00  INFO 17704 --- [           main] liquibase.util                           : Filtered out:                 0
+2026-10-11T17:39:35.662-04:00  INFO 17704 --- [           main] liquibase.util                           : -------------------------------
+2026-10-11T17:39:35.662-04:00  INFO 17704 --- [           main] liquibase.util                           : Total change sets:            2
+2026-10-11T17:39:35.663-04:00  INFO 17704 --- [           main] liquibase.util                           : Update summary generated
+2026-10-11T17:39:35.692-04:00  INFO 17704 --- [           main] liquibase.lockservice                    : Successfully released change log lock
+2026-10-11T17:39:35.695-04:00  INFO 17704 --- [           main] liquibase.command                        : Command execution complete
+2026-10-11T17:39:35.998-04:00  INFO 17704 --- [           main] demo.chirp.Application                   : Started Application in 17.303 seconds (process running for 18.228)
+2026-10-11T17:39:36.100-04:00  INFO 17704 --- [           main] grails.boot.GrailsApp                    : Application starting in environment: loadtest
+Grails application running at http://localhost:8080 in environment: loadtest
+2026-10-11T17:39:41.641-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.handle=?
+2026-10-11T17:39:44.682-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select f1_0.id,f1_0.followed_at,f1_0.followee_id,f1_0.follower_id,f1_0.version from follow f1_0 where f1_0.follower_id=?
+2026-10-11T17:39:44.714-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select c1_0.id,c1_0.author_id,c1_0.body,c1_0.posted_at,c1_0.reply_to_id,c1_0.version from chirp c1_0 where c1_0.author_id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) order by c1_0.posted_at desc fetch first ? rows only
+2026-10-11T17:39:44.749-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.762-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.765-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.771-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.777-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.781-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.782-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.785-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.786-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.787-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.788-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.790-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.790-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.793-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.795-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.796-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.797-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.798-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.799-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.800-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.802-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.803-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.804-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.805-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.806-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.808-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.810-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.811-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.812-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.813-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.814-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.816-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.817-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.818-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.819-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.820-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.822-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.824-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.825-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.826-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.827-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.827-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.830-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.832-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.833-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.833-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.834-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.835-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.837-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.838-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.840-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.841-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.842-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.843-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.845-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.846-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.848-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.848-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.849-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.851-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.852-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.854-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.854-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.855-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.856-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.858-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.860-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.861-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.862-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.863-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.863-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.865-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.866-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.867-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.868-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.869-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.871-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.872-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.873-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.874-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.875-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.876-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.878-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.879-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.880-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.881-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.881-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.884-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.885-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.886-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.887-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.888-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.889-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.891-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.891-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.892-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.893-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.894-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.895-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.896-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.896-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.897-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.898-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.900-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.901-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.901-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.902-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.903-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:44.905-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:44.906-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:44.906-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:44.907-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:44.908-04:00 DEBUG 17704 --- [nio-8080-exec-3] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:46.995-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.handle=?
+2026-10-11T17:39:46.998-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select f1_0.id,f1_0.followed_at,f1_0.followee_id,f1_0.follower_id,f1_0.version from follow f1_0 where f1_0.follower_id=?
+2026-10-11T17:39:47.005-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select c1_0.id,c1_0.author_id,c1_0.body,c1_0.posted_at,c1_0.reply_to_id,c1_0.version from chirp c1_0 where c1_0.author_id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) order by c1_0.posted_at desc fetch first ? rows only
+2026-10-11T17:39:47.015-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.018-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.019-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.020-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.021-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.021-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.022-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.024-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.025-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.026-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.027-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.027-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.028-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.029-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.030-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.031-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.032-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.032-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.033-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.034-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.036-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.036-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.037-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.038-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.038-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.040-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.041-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.042-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.043-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.043-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.044-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.045-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.046-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.047-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.047-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.048-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.049-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.050-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.051-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.051-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.052-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.052-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.054-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.055-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.056-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.056-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.057-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.058-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.059-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.060-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.061-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.062-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.062-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.063-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.064-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.065-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.066-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.067-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.067-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.068-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.069-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.070-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.070-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.071-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.071-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.073-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.075-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.076-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.077-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.077-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.078-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.079-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.080-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.080-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.082-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.083-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.084-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.085-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.086-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.086-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.087-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.088-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.089-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.089-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.090-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.091-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.091-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.093-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.094-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.094-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.095-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.095-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.097-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.097-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.098-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.099-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.099-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.100-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.101-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.102-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.102-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.103-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.104-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.105-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.106-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.107-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.108-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.108-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.id=?
+2026-10-11T17:39:47.110-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:47.111-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:47.112-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:47.113-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:47.113-04:00 DEBUG 17704 --- [nio-8080-exec-4] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.212-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.handle=?
+2026-10-11T17:39:49.216-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.author_id=?
+2026-10-11T17:39:49.218-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(f1_0.id) from follow f1_0 where f1_0.follower_id=?
+2026-10-11T17:39:49.220-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(f1_0.id) from follow f1_0 where f1_0.followee_id=?
+2026-10-11T17:39:49.225-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select c1_0.id,c1_0.author_id,c1_0.body,c1_0.posted_at,c1_0.reply_to_id,c1_0.version from chirp c1_0 where c1_0.author_id=? order by c1_0.posted_at desc fetch first ? rows only
+2026-10-11T17:39:49.232-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.234-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.235-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.236-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.236-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.238-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.239-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.240-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.241-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.242-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.243-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.244-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.246-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.246-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.247-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.249-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.250-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.251-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.252-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.253-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.254-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.255-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.257-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.257-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.258-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.259-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.261-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.262-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.263-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.264-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.265-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.267-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.267-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.269-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.270-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.271-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.273-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.273-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.274-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.275-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.276-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.277-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.280-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.281-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.282-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.283-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:49.285-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:49.286-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:49.287-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:49.288-04:00 DEBUG 17704 --- [nio-8080-exec-5] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.339-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select a1_0.id,a1_0.bio,a1_0.display_name,a1_0.handle,a1_0.joined_at,a1_0.version from account a1_0 where a1_0.handle=?
+2026-10-11T17:39:51.342-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.author_id=?
+2026-10-11T17:39:51.345-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(f1_0.id) from follow f1_0 where f1_0.follower_id=?
+2026-10-11T17:39:51.346-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(f1_0.id) from follow f1_0 where f1_0.followee_id=?
+2026-10-11T17:39:51.349-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select c1_0.id,c1_0.author_id,c1_0.body,c1_0.posted_at,c1_0.reply_to_id,c1_0.version from chirp c1_0 where c1_0.author_id=? order by c1_0.posted_at desc fetch first ? rows only
+2026-10-11T17:39:51.353-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.354-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.355-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.356-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.356-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.357-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.359-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.359-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.360-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.361-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.362-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.363-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.364-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.365-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.365-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.366-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.367-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.368-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.369-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.369-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.370-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.371-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.372-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.373-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.373-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.374-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.376-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.377-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.377-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.378-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.379-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.381-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.381-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.382-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.382-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.383-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.385-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.385-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.386-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.386-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.388-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.389-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.390-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.391-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.392-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.393-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from cheer c1_0 where c1_0.chirp_id=?
+2026-10-11T17:39:51.394-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select count(c1_0.id) from chirp c1_0 where c1_0.reply_to_id=?
+2026-10-11T17:39:51.395-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select t1_0.chirp_id,t1_0.id,t1_0.tag,t1_0.version from chirp_tag t1_0 where t1_0.chirp_id=?
+2026-10-11T17:39:51.396-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.mentioned_id,m1_0.version from mention m1_0 where m1_0.chirp_id=?
+2026-10-11T17:39:51.397-04:00 DEBUG 17704 --- [nio-8080-exec-7] org.hibernate.SQL                        : select m1_0.chirp_id,m1_0.id,m1_0.url,m1_0.version from media m1_0 where m1_0.chirp_id=?
