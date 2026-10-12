@@ -8,7 +8,7 @@ class ChirpController {
 
     @Transactional
     def save() {
-        def payload = request.JSON
+        Map payload = request.JSON as Map
         def account = payload.handle ? Account.findByHandle(payload.handle) : null
         if (!account) {
             render status: 404, contentType: 'application/json', text: ([error: 'not found'] as JSON)

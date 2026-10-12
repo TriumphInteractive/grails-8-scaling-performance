@@ -80,17 +80,20 @@ dependencies {
     testRuntimeOnly "com.h2database:h2"
 }
 
+// -PchirpJava=21 builds Java 21 bytecode so the same war can be measured on JDK 21 and JDK 25.
+def chirpJava = (findProperty('chirpJava') ?: '25') as Integer
+
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(chirpJava)
         vendor = JvmVendorSpec.AMAZON
     }
 }
 
-compileJava.options.release = 25
+compileJava.options.release = chirpJava
 
 def compileJavaLauncher = javaToolchains.launcherFor {
-    languageVersion = JavaLanguageVersion.of(25)
+    languageVersion = JavaLanguageVersion.of(chirpJava)
     vendor = JvmVendorSpec.AMAZON
 }
 
@@ -126,11 +129,19 @@ tasks.withType(Test).configureEach {
 }
 
 grails {
-    compileStatic {
-        controllers = true
-        services = true
-        tagLibs = true
-        gsp = true
+    // Grails 8 turns invokedynamic off by default (apache/grails-core#15293). Kept off on purpose.
+    indy = false
+}
+
+// -PchirpCompileStatic=false builds the dynamic layer of the comparison.
+if ((findProperty('chirpCompileStatic') ?: 'true').toString().toBoolean()) {
+    grails {
+        compileStatic {
+            controllers = true
+            services = true
+            tagLibs = true
+            gsp = true
+        }
     }
 }
 

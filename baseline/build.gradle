@@ -107,6 +107,23 @@ tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 
+grails {
+    // Grails 8 turns invokedynamic off by default (apache/grails-core#15293). -PgroovyIndy=true builds the comparison.
+    indy = (findProperty('groovyIndy') ?: 'false').toString().toBoolean()
+}
+
+// -PchirpCompileStatic=false builds the naive dynamic layer of the comparison.
+if ((findProperty('chirpCompileStatic') ?: 'true').toString().toBoolean()) {
+    grails {
+        compileStatic {
+            controllers = true
+            services = true
+            tagLibs = true
+            gsp = true
+        }
+    }
+}
+
 tasks.withType(War).configureEach {
     archiveBaseName = 'chirp-baseline'
 }

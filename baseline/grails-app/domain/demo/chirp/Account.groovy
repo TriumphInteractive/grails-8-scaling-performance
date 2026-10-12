@@ -14,6 +14,8 @@ class Account {
     }
 
     static mapping = {
+        int entityBatch = Integer.getInteger('chirp.gorm.entityBatchSize', 0)
+        if (entityBatch > 1) { batchSize entityBatch }
         table 'account'
         id column: 'id', generator: 'identity'
         version column: 'version'

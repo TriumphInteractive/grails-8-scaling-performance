@@ -16,7 +16,7 @@ class TimelineController {
         def authors = follows.collect { it.followee }
         def max = Math.min(Math.max(params.int('max') ?: 20, 1), 50)
         def chirps = Chirp.findAllByAuthorInList(authors, [max: max, sort: 'postedAt', order: 'desc'])
-        def timeline = chirps.collect { chirp -> NaiveChirpJson.of(chirp) }
+        def timeline = NaiveChirpJsonService.page(chirps)
 
         render contentType: 'application/json', text: ([handle: account.handle, chirps: timeline] as JSON)
     }
